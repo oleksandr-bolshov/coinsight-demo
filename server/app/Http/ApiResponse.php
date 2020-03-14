@@ -4,13 +4,13 @@ declare(strict_types=1);
 
 namespace App\Http;
 
-use App\Contracts\ExceptionContract as ApiExceptionContract;
-use App\Contracts\ResponseContract as ApiResponseContract;
+use App\Support\Contracts\ExceptionContract;
+use App\Support\Contracts\ResponseContract;
 use Illuminate\Http\JsonResponse;
 
 final class ApiResponse extends JsonResponse
 {
-    public static function success(ApiResponseContract $response, array $meta = []): self
+    public static function success(ResponseContract $response, array $meta = []): self
     {
         return new static([
             'data' => $response,
@@ -23,7 +23,7 @@ final class ApiResponse extends JsonResponse
         return new static();
     }
 
-    public static function error(ApiExceptionContract $exception): self
+    public static function error(ExceptionContract $exception): self
     {
         return new static([
             'error' => $exception->toArray()
