@@ -5,5 +5,6 @@ use Illuminate\Support\Facades\Route;
 Route::group([
     'prefix' => 'auth'
 ], function() {
-   Route::post('/register', 'AuthController@register');
+    Route::post('/register', 'AuthController@register');
+    Route::post('/login', 'AuthController@login');
 });
