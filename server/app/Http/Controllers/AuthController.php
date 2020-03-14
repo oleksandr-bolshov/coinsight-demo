@@ -7,13 +7,17 @@ namespace App\Http\Controllers;
 use App\Domains\Interactors\Auth\AuthenticateUserInteractor;
 use App\Domains\Interactors\Auth\RegisterInteractor;
 use App\Domains\Interactors\Sessions\CreateSessionInteractor;
+use App\Domains\Interactors\Users\GetUserByIdInteractor;
 use App\Domains\Requests\Auth\AuthenticateUserRequest;
 use App\Domains\Requests\Auth\RegisterRequest;
 use App\Domains\Requests\Sessions\CreateSessionRequest;
+use App\Domains\Requests\Users\GetUserByIdRequest;
 use App\Http\ApiResponse;
+use App\Http\Requests\Auth\GetCurrentUserApiRequest;
 use App\Http\Requests\Auth\LoginApiRequest;
 use App\Http\Requests\Auth\RegisterApiRequest;
 use App\Http\Resources\LoginResource;
+use App\Http\Resources\UserResource;
 use App\Http\Responses\LoginResponse;
 use App\Http\Services\TokenService;
 
@@ -60,5 +64,16 @@ final class AuthController
         ]);
 
         return ApiResponse::success(new LoginResource($loginResponse));
+    }
+
+    public function me(GetCurrentUserApiRequest $request): ApiResponse
+    {
+        $user = (new GetUserByIdInteractor)->execute(
+            new GetUserByIdRequest([
+                'id' => $request->userId(),
+            ])
+        )->user;
+
+        return ApiResponse::success(new UserResource($user));
     }
 }
