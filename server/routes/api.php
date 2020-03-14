@@ -10,3 +10,8 @@ Route::group([
     Route::get('/me', 'AuthController@me')->middleware('token:access');
 });
 
+Route::group([
+    'prefix' => 'sessions'
+], function() {
+    Route::get('/access-token', 'SessionController@getAccessToken')->middleware('token:refresh');
+});
