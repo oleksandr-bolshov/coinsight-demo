@@ -17,6 +17,7 @@ Route::group([
         'middleware' => 'token:access'
     ], function () {
         Route::get('/', 'SessionController@getSessions');
+        Route::put('/terminate', 'SessionController@terminate');
     });
 
     Route::get('/access-token', 'SessionController@getAccessToken')->middleware('token:refresh');
