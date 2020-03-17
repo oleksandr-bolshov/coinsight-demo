@@ -2,11 +2,9 @@
 
 declare(strict_types=1);
 
-namespace App\Exceptions;
+namespace App\Http\Exceptions;
 
 use App\Http\ApiResponse;
-use App\Http\Exceptions\RequestValidation;
-use App\Http\Exceptions\UnknownException;
 use App\Support\Contracts\ExceptionContract;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
