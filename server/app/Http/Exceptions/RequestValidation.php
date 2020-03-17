@@ -18,8 +18,8 @@ final class RequestValidation extends ValidationException implements ExceptionCo
 
     public function __construct(Validator $validator, ?Response $response = null, string $errorBag = 'default')
     {
-        $this->message = $this->validator->errors();
         parent::__construct($validator, $response, $errorBag);
+        $this->message = $validator->errors();
     }
 
     public function getStatus(): int
