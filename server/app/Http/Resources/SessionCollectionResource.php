@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Resources;
 
-use App\Domains\Entities\Session;
+use App\Domain\Users\Entities\Session;
 use App\Support\Contracts\ResponseContract;
 use Illuminate\Http\Resources\Json\JsonResource;
 

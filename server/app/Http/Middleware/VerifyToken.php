@@ -4,8 +4,8 @@ declare(strict_types=1);
 
 namespace App\Http\Middleware;
 
-use App\Domains\Interactors\Sessions\GetActiveSessionByIdInteractor;
-use App\Domains\Requests\Sessions\GetActiveSessionByIdRequest;
+use App\Domain\Users\Interactors\Sessions\GetActiveSessionByIdInteractor;
+use App\Domain\Users\Interactors\Sessions\GetActiveSessionByIdRequest;
 use App\Http\Exceptions\TokenRequired;
 use App\Http\Services\TokenService;
 use Closure;

@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Domains\Interactors\Auth\AuthenticateUserInteractor;
-use App\Domains\Interactors\Auth\RegisterInteractor;
-use App\Domains\Interactors\Sessions\CreateSessionInteractor;
-use App\Domains\Interactors\Users\GetUserByIdInteractor;
-use App\Domains\Requests\Auth\AuthenticateUserRequest;
-use App\Domains\Requests\Auth\RegisterRequest;
-use App\Domains\Requests\Sessions\CreateSessionRequest;
-use App\Domains\Requests\Users\GetUserByIdRequest;
+use App\Domain\Users\Interactors\Auth\AuthenticateUserInteractor;
+use App\Domain\Users\Interactors\Auth\AuthenticateUserRequest;
+use App\Domain\Users\Interactors\Auth\RegisterInteractor;
+use App\Domain\Users\Interactors\Auth\RegisterRequest;
+use App\Domain\Users\Interactors\Sessions\CreateSessionInteractor;
+use App\Domain\Users\Interactors\Sessions\CreateSessionRequest;
+use App\Domain\Users\Interactors\Users\GetUserByIdInteractor;
+use App\Domain\Users\Interactors\Users\GetUserByIdRequest;
 use App\Http\ApiResponse;
 use App\Http\Requests\Auth\GetCurrentUserApiRequest;
 use App\Http\Requests\Auth\LoginApiRequest;

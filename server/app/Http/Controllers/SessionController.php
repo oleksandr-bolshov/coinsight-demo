@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Domains\Interactors\Sessions\GetActiveSessionByIdInteractor;
-use App\Domains\Interactors\Sessions\GetUserActiveSessionsInteractor;
-use App\Domains\Interactors\Sessions\TerminateSessionInteractor;
-use App\Domains\Interactors\Sessions\UpdateSessionLastUsedInteractor;
-use App\Domains\Requests\Sessions\GetActiveSessionByIdRequest;
-use App\Domains\Requests\Sessions\GetUserActiveSessionsRequest;
-use App\Domains\Requests\Sessions\TerminateSessionRequest;
-use App\Domains\Requests\Sessions\UpdateSessionLastUsedRequest;
+use App\Domain\Users\Interactors\Sessions\GetActiveSessionByIdInteractor;
+use App\Domain\Users\Interactors\Sessions\GetActiveSessionByIdRequest;
+use App\Domain\Users\Interactors\Sessions\GetUserActiveSessionsInteractor;
+use App\Domain\Users\Interactors\Sessions\GetUserActiveSessionsRequest;
+use App\Domain\Users\Interactors\Sessions\TerminateSessionInteractor;
+use App\Domain\Users\Interactors\Sessions\TerminateSessionRequest;
+use App\Domain\Users\Interactors\Sessions\UpdateSessionLastUsedInteractor;
+use App\Domain\Users\Interactors\Sessions\UpdateSessionLastUsedRequest;
 use App\Http\ApiResponse;
 use App\Http\Exceptions\InvalidSessionId;
 use App\Http\Requests\Sessions\GetAccessTokenApiRequest;
