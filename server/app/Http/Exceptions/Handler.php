@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Exceptions;
 
 use App\Http\ApiResponse;
-use App\Support\Contracts\ExceptionContract;
+use App\Support\Contracts\Exception as ExceptionContract;
 use Exception;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
 use Illuminate\Validation\ValidationException;

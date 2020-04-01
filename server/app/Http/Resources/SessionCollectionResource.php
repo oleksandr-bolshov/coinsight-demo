@@ -5,10 +5,10 @@ declare(strict_types=1);
 namespace App\Http\Resources;
 
 use App\Domain\Users\Entities\Session;
-use App\Support\Contracts\ResponseContract;
+use App\Support\Contracts\Response;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class SessionCollectionResource extends JsonResource implements ResponseContract
+final class SessionCollectionResource extends JsonResource implements Response
 {
     public function toArray($request): array
     {

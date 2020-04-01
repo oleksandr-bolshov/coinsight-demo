@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Common\Exceptions;
 
-use App\Support\Contracts\ExceptionContract;
+use App\Support\Contracts\Exception as ExceptionContract;
 use App\Support\Traits\ExceptionToArrayTrait;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Response;
