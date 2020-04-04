@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Coinfo\Types;
+namespace App\Domain\Markets\Entities;
 
 use Spatie\DataTransferObject\DataTransferObject;
 
