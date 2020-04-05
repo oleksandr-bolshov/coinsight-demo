@@ -26,9 +26,11 @@ use App\Http\Services\TokenService;
 
 final class SessionController
 {
-    public function getSessions(GetSessionsApiRequest $request): ApiResponse
-    {
-        $sessionsResponse = (new GetUserActiveSessionsInteractor())->execute(
+    public function getSessions(
+        GetSessionsApiRequest $request,
+        GetUserActiveSessionsInteractor $getUserActiveSessionsInteractor
+    ): ApiResponse {
+        $sessionsResponse = $getUserActiveSessionsInteractor->execute(
             new GetUserActiveSessionsRequest([
                 'id' => $request->userId(),
                 'page' => $request->page(),
@@ -49,15 +51,18 @@ final class SessionController
         );
     }
 
-    public function getAccessToken(GetAccessTokenApiRequest $request): ApiResponse
-    {
-        (new UpdateSessionLastUsedInteractor())->execute(
+    public function getAccessToken(
+        GetAccessTokenApiRequest $request,
+        UpdateSessionLastUsedInteractor $updateSessionLastUsedInteractor,
+        TokenService $tokenService
+    ): ApiResponse {
+        $updateSessionLastUsedInteractor->execute(
             new UpdateSessionLastUsedRequest([
                 'id' => $request->sessionId(),
             ])
         );
 
-        $accessToken = (new TokenService())->generateAccessToken($request->sessionId());
+        $accessToken = $tokenService->generateAccessToken($request->sessionId());
 
         $accessTokenResponse = new AccessTokenResponse([
             'accessToken' => $accessToken,
@@ -66,9 +71,12 @@ final class SessionController
         return ApiResponse::success(new AccessTokenResource($accessTokenResponse));
     }
 
-    public function terminate(TerminateSessionApiRequest $request): ApiResponse
+    public function terminate(
+        TerminateSessionApiRequest $request,
+        GetActiveSessionByIdInteractor $getActiveSessionByIdInteractor
+    ): ApiResponse
     {
-        $session = (new GetActiveSessionByIdInteractor())->execute(
+        $session = $getActiveSessionByIdInteractor->execute(
             new GetActiveSessionByIdRequest([
                 'id' => $request->id()
             ])

@@ -23,16 +23,11 @@ use App\Http\Services\TokenService;
 
 final class AuthController
 {
-    private TokenService $tokenService;
-
-    public function __construct(TokenService $tokenService)
-    {
-        $this->tokenService = $tokenService;
-    }
-
-    public function register(RegisterApiRequest $request): ApiResponse
-    {
-        (new RegisterInteractor())->execute(
+    public function register(
+        RegisterApiRequest $request,
+        RegisterInteractor $registerInteractor
+    ): ApiResponse {
+        $registerInteractor->execute(
             new RegisterRequest([
                 'email' => $request->email(),
                 'username' => $request->username(),
@@ -43,32 +38,38 @@ final class AuthController
         return ApiResponse::empty();
     }
 
-    public function login(LoginApiRequest $request): ApiResponse
-    {
-        $user = (new AuthenticateUserInteractor)->execute(
+    public function login(
+        LoginApiRequest $request,
+        AuthenticateUserInteractor $authenticateUserInteractor,
+        CreateSessionInteractor $createSessionInteractor,
+        TokenService $tokenService
+    ): ApiResponse {
+        $user = $authenticateUserInteractor->execute(
             new AuthenticateUserRequest([
                 'username' => $request->username(),
                 'password' => $request->password(),
             ])
         )->user;
 
-        $session = (new CreateSessionInteractor)->execute(
+        $session = $createSessionInteractor->execute(
             new CreateSessionRequest([
                 'userId' => $user->id
             ])
         )->session;
 
         $loginResponse = new LoginResponse([
-            'accessToken' => $this->tokenService->generateAccessToken($session->id),
-            'refreshToken' => $this->tokenService->generateRefreshToken($session->id),
+            'accessToken' => $tokenService->generateAccessToken($session->id),
+            'refreshToken' => $tokenService->generateRefreshToken($session->id),
         ]);
 
         return ApiResponse::success(new LoginResource($loginResponse));
     }
 
-    public function me(GetCurrentUserApiRequest $request): ApiResponse
-    {
-        $user = (new GetUserByIdInteractor)->execute(
+    public function me(
+        GetCurrentUserApiRequest $request,
+        GetUserByIdInteractor $getUserByIdInteractor
+    ): ApiResponse {
+        $user = $getUserByIdInteractor->execute(
             new GetUserByIdRequest([
                 'id' => $request->userId(),
             ])
