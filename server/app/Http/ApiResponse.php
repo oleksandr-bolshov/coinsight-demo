@@ -14,13 +14,16 @@ final class ApiResponse extends JsonResponse
     {
         return new static([
             'data' => $response,
-            'meta' => $meta
+            'meta' => $meta,
         ]);
     }
 
     public static function empty(): self
     {
-        return new static();
+        return new static([
+            'data' => [],
+            'meta' => [],
+        ]);
     }
 
     public static function error(Exception $exception): self

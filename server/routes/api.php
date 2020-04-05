@@ -23,9 +23,13 @@ Route::group([
     Route::get('/access-token', 'SessionController@getAccessToken')->middleware('token:refresh');
 });
 
+
+Route::middleware('token:access')
+    ->get('/global', 'MarketController@getGlobalStats');
+
 Route::group([
-    'prefix' => 'markets',
+    'prefix' => 'coins',
     'middleware' => 'token:access'
 ], function () {
-    Route::get('/global', 'MarketController@getGlobalStats');
+    Route::get('/', 'MarketController@getCoins');
 });

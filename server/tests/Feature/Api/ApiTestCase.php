@@ -30,7 +30,7 @@ abstract class ApiTestCase extends TestCase
 
     public function apiGet(string $endpoint, array $data = []): TestResponse
     {
-        $uri = $this->getEndpointUri(self::API_PREFIX . '/' . $endpoint, $data);
+        $uri = $this->getEndpointUri(self::API_PREFIX . $endpoint, $data);
 
         return parent::getJson($uri, [
             'Authorization' => 'Bearer ' . $this->accessToken

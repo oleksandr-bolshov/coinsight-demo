@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Sessions;
 
 use App\Domain\Users\Entities\Session;
 use App\Support\Contracts\Response;

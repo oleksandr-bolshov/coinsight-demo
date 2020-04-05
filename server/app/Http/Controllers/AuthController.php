@@ -16,8 +16,8 @@ use App\Http\ApiResponse;
 use App\Http\Requests\Auth\GetCurrentUserApiRequest;
 use App\Http\Requests\Auth\LoginApiRequest;
 use App\Http\Requests\Auth\RegisterApiRequest;
-use App\Http\Resources\LoginResource;
-use App\Http\Resources\UserResource;
+use App\Http\Resources\Auth\LoginResource;
+use App\Http\Resources\Auth\UserResource;
 use App\Http\Responses\LoginResponse;
 use App\Http\Services\TokenService;
 
