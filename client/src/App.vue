@@ -1,56 +1,93 @@
 <template>
   <v-app>
-    <v-app-bar app color="primary" dark>
-      <div class="d-flex align-center">
-        <v-img
-          alt="Vuetify Logo"
-          class="shrink mr-2"
-          contain
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-logo-dark.png"
-          transition="scale-transition"
-          width="40"
-        />
-
-        <v-img
-          alt="Vuetify Name"
-          class="shrink mt-1 hidden-sm-and-down"
-          contain
-          min-width="100"
-          src="https://cdn.vuetifyjs.com/images/logos/vuetify-name-dark.png"
-          width="100"
-        />
+    <v-app-bar app dark color="#363557" elevation="0">
+      <div class="d-flex align-center pl-8">
+        <v-toolbar-title>
+          <h2>
+            Coinsight
+          </h2>
+        </v-toolbar-title>
       </div>
 
       <v-spacer></v-spacer>
 
-      <v-btn
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-        text
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
+      <v-flex align-center justify-end row class="pr-8" v-if="isLoggedIn">
+        <v-btn icon class="notifications">
+          <v-icon color="#c9c8df">
+            mdi-bell
+          </v-icon>
+        </v-btn>
+        <span class="px-4 white--text">{{ user.username }}</span>
+        <v-menu bottom offset-y>
+          <template v-slot:activator="{on}">
+            <v-icon v-on="on" color="#c9c8df">
+              mdi-chevron-down
+            </v-icon>
+          </template>
+          <v-list flat>
+            <v-list-item @click="onLogout">
+              Log Out
+            </v-list-item>
+          </v-list>
+        </v-menu>
+      </v-flex>
+      <div v-else>
+        <v-btn text :to="{name: 'login'}">
+          Login
+        </v-btn>
+      </div>
     </v-app-bar>
 
     <v-content>
-      <HelloWorld />
+      <router-view />
     </v-content>
   </v-app>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld';
+import {mapActions, mapGetters} from 'vuex';
+import {
+  GET_CURRENT_USER,
+  IS_ACCESS_TOKEN_NEED_REFRESH,
+  IS_LOGGED_IN,
+  LOGOUT,
+  REFRESH_ACCESS_TOKEN,
+} from './store/auth/types';
 
 export default {
   name: 'App',
 
-  components: {
-    HelloWorld,
+  async mounted() {
+    const hour_in_milliseconds = 3600000;
+
+    const refreshAccessToken = async () => {
+      if (this.isLoggedIn && this.isAccessTokenNeedRefresh) {
+        await this.refreshAccessToken();
+      }
+    };
+
+    await refreshAccessToken();
+    setInterval(() => refreshAccessToken(), hour_in_milliseconds);
   },
 
-  data: () => ({
-    //
-  }),
+  methods: {
+    ...mapActions('auth', {
+      logout: LOGOUT,
+      refreshAccessToken: REFRESH_ACCESS_TOKEN,
+    }),
+
+    async onLogout() {
+      await this.logout();
+      await this.$router.push({name: 'login'});
+    },
+  },
+
+  computed: {
+    ...mapGetters('auth', {
+      user: GET_CURRENT_USER,
+      isAccessTokenNeedRefresh: IS_ACCESS_TOKEN_NEED_REFRESH,
+      isLoggedIn: IS_LOGGED_IN,
+    }),
+  },
 };
 </script>

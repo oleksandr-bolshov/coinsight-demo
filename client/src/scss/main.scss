@@ -1,0 +1,71 @@
+@import 'variables';
+@import '~vuetify/src/styles/styles';
+@import '~vuetify/src/styles/main';
+@import 'reset';
+
+@font-face {
+  font-family: 'NunitoExtraLight';
+  src: url('../assets/fonts/Nunito-ExtraLight.ttf');
+}
+
+@font-face {
+  font-family: 'NunitoLight';
+  src: url('../assets/fonts/Nunito-Light.ttf');
+}
+
+@font-face {
+  font-family: 'NunitoRegular';
+  src: url('../assets/fonts/Nunito-Regular.ttf');
+}
+
+@font-face {
+  font-family: 'NunitoSemiBold';
+  src: url('../assets/fonts/Nunito-SemiBold.ttf');
+}
+
+@font-face {
+  font-family: 'NunitoBold';
+  src: url('../assets/fonts/Nunito-Bold.ttf');
+}
+
+@font-face {
+  font-family: 'NunitoExtraBold';
+  src: url('../assets/fonts/Nunito-ExtraBold.ttf');
+}
+
+@font-face {
+  font-family: 'NunitoBlack';
+  src: url('../assets/fonts/Nunito-Black.ttf');
+}
+
+#app {
+  background: #222337;
+}
+
+.v-app-bar {
+  background-color: #45426f;
+}
+
+* {
+  color: #c9c8df;
+}
+
+.theme--dark.v-btn {
+  text-decoration: none !important;
+}
+
+.v-text-field, .v-btn, .v-card {
+  border-radius: 1em !important;
+}
+
+.v-card {
+  padding: .5em .25em;
+}
+
+.v-card, .v-list {
+  background-color: #292944 !important;
+}
+
+.v-content__wrap {
+  display: flex;
+}
