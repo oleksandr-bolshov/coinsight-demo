@@ -100,23 +100,3 @@ export default {
   },
 };
 </script>
-
-<style scoped lang="scss">
-.horizontal-line {
-  display: flex;
-  flex-direction: row;
-}
-.horizontal-line:before,
-.horizontal-line:after {
-  content: '';
-  flex: 1 1;
-  border-bottom: 1px solid #c9c8df;
-  margin: auto;
-}
-.horizontal-line:before {
-  margin-right: 0.5em;
-}
-.horizontal-line:after {
-  margin-left: 0.5em;
-}
-</style>

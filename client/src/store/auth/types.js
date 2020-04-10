@@ -2,6 +2,7 @@ export const SET_ACCESS_TOKEN = 'setAccessToken';
 export const SET_REFRESH_TOKEN = 'setRefreshToken';
 export const SET_CURRENT_USER = 'setCurrentUser';
 
+export const REGISTER = 'register';
 export const LOGIN = 'login';
 export const LOGOUT = 'logout';
 export const LOAD_TOKENS_FROM_STORAGE = 'loadTokensFromStorage';

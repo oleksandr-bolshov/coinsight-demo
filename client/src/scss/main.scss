@@ -47,7 +47,7 @@
 }
 
 * {
-  color: #c9c8df;
+  color: #dcdbf2;
 }
 
 .theme--dark.v-btn {
@@ -56,6 +56,10 @@
 
 .v-text-field, .v-btn, .v-card {
   border-radius: 1em !important;
+}
+
+.v-btn--outlined::before {
+  border-radius: inherit;
 }
 
 .v-card {
@@ -68,4 +72,22 @@
 
 .v-content__wrap {
   display: flex;
+}
+
+.horizontal-line {
+  display: flex;
+  flex-direction: row;
+}
+.horizontal-line:before,
+.horizontal-line:after {
+  content: '';
+  flex: 1 1;
+  border-bottom: 1px solid #c9c8df;
+  margin: auto;
+}
+.horizontal-line:before {
+  margin-right: 0.5em;
+}
+.horizontal-line:after {
+  margin-left: 0.5em;
 }

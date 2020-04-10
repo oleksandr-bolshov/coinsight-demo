@@ -5,6 +5,7 @@ import {
   LOGIN,
   LOGOUT,
   REFRESH_ACCESS_TOKEN,
+  REGISTER,
   SET_ACCESS_TOKEN,
   SET_CURRENT_USER,
   SET_REFRESH_TOKEN,
@@ -14,11 +15,20 @@ import {
   logout,
   getCurrentUser,
   refreshAccessToken,
+  register,
 } from '../../api/auth';
 import jwtDecode from 'jwt-decode';
 import storage from '../../services/storage';
 
 export default {
+  async [REGISTER](_, {email, username, password}) {
+    await register({
+      email,
+      username,
+      password,
+    });
+  },
+
   async [LOGIN]({commit, dispatch}, {username, password}) {
     const result = await login({
       username,

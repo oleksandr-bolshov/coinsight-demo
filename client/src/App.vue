@@ -31,9 +31,12 @@
           </v-list>
         </v-menu>
       </v-flex>
-      <div v-else>
-        <v-btn text :to="{name: 'login'}">
+      <div v-else class="pr-8">
+        <v-btn color="primary" :to="{name: 'login'}" class="mr-2">
           Login
+        </v-btn>
+        <v-btn color="primary" outlined :to="{name: 'register'}">
+          Sign up
         </v-btn>
       </div>
     </v-app-bar>

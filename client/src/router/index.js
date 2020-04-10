@@ -4,6 +4,7 @@ import Home from '../views/Home';
 import About from '../views/About';
 import Login from '../views/Login';
 import AuthGuard from '../components/AuthGuard';
+import Register from '../views/Register';
 
 Vue.use(VueRouter);
 
@@ -26,6 +27,14 @@ const routes = [
     component: About,
     meta: {
       requiresAuth: false,
+    },
+  },
+  {
+    path: '/register',
+    name: 'register',
+    component: Register,
+    meta: {
+      handleAuth: true,
     },
   },
   {
