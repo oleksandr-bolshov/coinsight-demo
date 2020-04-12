@@ -1,28 +1,19 @@
-import HttpClient from '../services/httpClient';
+import httpClient from '../services/httpClient';
 
-let httpClient = new HttpClient();
+const register = params => httpClient.post('/auth/register', params);
 
-const register = params =>
-  httpClient.post({url: '/auth/register', data: params});
-
-const login = params => httpClient.post({url: '/auth/login', data: params});
+const login = params => httpClient.post('/auth/login', params);
 
 const getCurrentUser = () =>
-  httpClient.get({
-    url: '/auth/me',
-    requestOptions: {useAccessToken: true},
-  });
+  httpClient.get('/auth/me', {requestOptions: {useAccessToken: true}});
 
 const logout = params =>
-  httpClient.put({
-    url: '/sessions/terminate',
-    data: params,
+  httpClient.put('/sessions/terminate', params, {
     requestOptions: {useAccessToken: true},
   });
 
 const refreshAccessToken = () =>
-  httpClient.get({
-    url: '/sessions/access-token',
+  httpClient.get('/sessions/access-token', {
     requestOptions: {useRefreshToken: true},
   });
 

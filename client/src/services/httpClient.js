@@ -1,6 +1,7 @@
 import axios from 'axios';
 import storage from './storage';
 import camelcaseKeys from 'camelcase-keys';
+import snakeCaseKeys from 'snakecase-keys';
 import config from '../config';
 
 const axiosInstance = axios.create({
@@ -10,87 +11,110 @@ const axiosInstance = axios.create({
 
 axiosInstance.interceptors.response.use(response => response.data);
 
-class HttpClient {
-  _prepareRequest(options) {
-    let defaultOptions = {
-      useAccessToken: false,
-      useRefreshToken: false,
-    };
+const _prepareResponse = response => {
+  if ('data' in response) {
+    response.data = camelcaseKeys(response.data, {deep: true});
+  } else if ('error' in response) {
+    let error = camelcaseKeys(response.error, {deep: true});
+    throw new Error(JSON.stringify(error));
+  }
 
-    options = {
-      ...defaultOptions,
-      ...options,
-    };
+  return response;
+};
 
-    let headers = {
-      'X-Requested-With': 'XMLHttpRequest',
-      'Content-type': 'application/json',
-      Accept: 'application/json',
-    };
+const _request = config => {
+  config.params = snakeCaseKeys(config.params || {}, {deep: true});
+  config.data = snakeCaseKeys(config.data || {}, {deep: true});
 
-    if (options.useAccessToken) {
-      if (!storage.hasAccessToken()) {
-        throw TypeError(`Access token is missing`);
-      }
+  let defaultOptions = {
+    useAccessToken: false,
+    useRefreshToken: false,
+  };
 
-      headers['Authorization'] = 'Bearer ' + storage.getAccessToken();
-    } else if (options.useRefreshToken) {
-      if (!storage.hasRefreshToken()) {
-        throw TypeError(`Refresh token is missing`);
-      }
+  config.requestOptions = {
+    ...defaultOptions,
+    ...config.requestOptions,
+  };
 
-      headers['Authorization'] = 'Bearer ' + storage.getRefreshToken();
+  config.headers = {
+    ...config.headers,
+    'X-Requested-With': 'XMLHttpRequest',
+    'Content-type': 'application/json',
+    Accept: 'application/json',
+  };
+
+  if (config.requestOptions.useAccessToken) {
+    if (!storage.hasAccessToken()) {
+      throw TypeError(`Access token is missing`);
     }
 
-    axiosInstance.defaults.headers.common = {
-      ...axiosInstance.defaults.headers.common.headers,
-      ...headers,
-    };
-  }
-
-  _prepareResponse(response) {
-    if ('data' in response) {
-      response.data = camelcaseKeys(response.data, {deep: true});
-    } else if ('error' in response) {
-      let error = camelcaseKeys(response.error, {deep: true});
-      throw new Error(JSON.stringify(error));
+    config.headers['Authorization'] = 'Bearer ' + storage.getAccessToken();
+  } else if (config.requestOptions.useRefreshToken) {
+    if (!storage.hasRefreshToken()) {
+      throw TypeError(`Refresh token is missing`);
     }
 
-    return response;
+    config.headers['Authorization'] = 'Bearer ' + storage.getRefreshToken();
   }
 
-  async get({url, headers = {}, params = {}, requestOptions = {}}) {
-    this._prepareRequest(requestOptions);
-    return this._prepareResponse(
-      await axiosInstance.get(url, {
-        params,
-        headers,
-      }),
-    );
-  }
+  return axiosInstance.request({
+    url: config.url,
+    method: config.method,
+    headers: config.headers,
+    params: config.params,
+    data: config.data,
+  });
+};
 
-  async post({url, data, headers = {}, requestOptions = {}}) {
-    this._prepareRequest(requestOptions);
-    return this._prepareResponse(
-      await axiosInstance.post(url, data, {
-        headers,
-      }),
-    );
-  }
+const get = async (
+  url,
+  {params = {}, headers = {}, requestOptions = {}} = {},
+) => {
+  let response = await _request({
+    method: 'get',
+    url,
+    params,
+    headers,
+    requestOptions,
+  });
 
-  async put({url, data, headers = {}, requestOptions = {}}) {
-    this._prepareRequest(requestOptions);
-    return this._prepareResponse(
-      await axiosInstance.put(url, data, {
-        headers,
-      }),
-    );
-  }
+  return _prepareResponse(response);
+};
 
-  async delete({url, requestOptions = {}}) {
-    this._prepareRequest(requestOptions);
-    return this._prepareResponse(await axiosInstance.delete(url));
-  }
-}
+const post = async (url, data, {headers = {}, requestOptions = {}} = {}) => {
+  let response = await _request({
+    method: 'post',
+    url,
+    data,
+    headers,
+    requestOptions,
+  });
 
-export default HttpClient;
+  return _prepareResponse(response);
+};
+
+const put = async (url, data, {headers = {}, requestOptions = {}} = {}) => {
+  let response = await _request({
+    method: 'put',
+    url,
+    data,
+    headers,
+    requestOptions,
+  });
+
+  return _prepareResponse(response);
+};
+
+const destroy = async (url, {requestOptions = {}} = {}) => {
+  let response = await _request({
+    method: 'delete',
+    url,
+    requestOptions,
+  });
+
+  return _prepareResponse(response);
+};
+
+const httpClient = {get, post, put, destroy};
+
+export default httpClient;
