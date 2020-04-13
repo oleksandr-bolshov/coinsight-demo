@@ -1,93 +1,75 @@
 @import 'variables';
-@import '~vuetify/src/styles/styles';
 @import '~vuetify/src/styles/main';
 @import 'reset';
+@import 'overrides';
 
 @font-face {
   font-family: 'NunitoExtraLight';
+  font-weight: 200;
   src: url('../assets/fonts/Nunito-ExtraLight.ttf');
 }
 
 @font-face {
   font-family: 'NunitoLight';
+  font-weight: 300;
   src: url('../assets/fonts/Nunito-Light.ttf');
 }
 
 @font-face {
   font-family: 'NunitoRegular';
+  font-weight: 400;
   src: url('../assets/fonts/Nunito-Regular.ttf');
 }
 
 @font-face {
   font-family: 'NunitoSemiBold';
+  font-weight: 500;
   src: url('../assets/fonts/Nunito-SemiBold.ttf');
 }
 
 @font-face {
   font-family: 'NunitoBold';
+  font-weight: 600;
   src: url('../assets/fonts/Nunito-Bold.ttf');
 }
 
 @font-face {
   font-family: 'NunitoExtraBold';
+  font-weight: 700;
   src: url('../assets/fonts/Nunito-ExtraBold.ttf');
 }
 
 @font-face {
   font-family: 'NunitoBlack';
+  font-weight: 800;
   src: url('../assets/fonts/Nunito-Black.ttf');
 }
 
 #app {
-  background: #222337;
-}
-
-.v-app-bar {
-  background-color: #45426f;
+  background: var(--v-background-base);
 }
 
 * {
-  color: #dcdbf2;
-}
-
-.theme--dark.v-btn {
-  text-decoration: none !important;
-}
-
-.v-text-field, .v-btn, .v-card {
-  border-radius: 1em !important;
-}
-
-.v-btn--outlined::before {
-  border-radius: inherit;
-}
-
-.v-card {
-  padding: .5em .25em;
-}
-
-.v-card, .v-list {
-  background-color: #292944 !important;
-}
-
-.v-content__wrap {
-  display: flex;
+  color: var(--v-text-base);
 }
 
 .horizontal-line {
   display: flex;
   flex-direction: row;
 }
+
 .horizontal-line:before,
 .horizontal-line:after {
   content: '';
   flex: 1 1;
-  border-bottom: 1px solid #c9c8df;
+  border-bottom: 1px solid #8a899c;
   margin: auto;
 }
+
 .horizontal-line:before {
   margin-right: 0.5em;
 }
+
 .horizontal-line:after {
   margin-left: 0.5em;
 }

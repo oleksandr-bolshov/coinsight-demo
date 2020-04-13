@@ -1,0 +1,65 @@
+
+.theme--dark.v-icon {
+  color: var(--v-text-base) !important;
+}
+
+.theme--dark.v-app-bar.v-toolbar.v-sheet,
+.theme--dark.v-navigation-drawer,
+.theme--dark.v-navigation-drawer .v-list {
+  background-color: var(--v-surface-base);
+}
+
+.theme--dark.v-card {
+  background-color: var(--v-surface-base);
+}
+
+.theme--dark.v-btn {
+  text-decoration: none !important;
+}
+
+.theme--dark.v-data-table {
+  background-color: var(--v-background-base);
+  width: 100%;
+
+  tbody tr:hover:not(.v-data-table__expanded__content):not(.v-data-table__empty-wrapper) {
+    background: #2c2d41;
+  }
+
+  td, th {
+    font-size: 1em;
+    height: 4em;
+    line-height: 1.1em;
+  }
+}
+
+.v-text-field, .v-btn:not(.v-btn--round), .v-card {
+  border-radius: 1em;
+}
+
+.v-btn--outlined::before {
+  border-radius: inherit;
+}
+
+.v-card {
+  padding: .5em .25em;
+}
+
+.v-content {
+  justify-content: center;
+}
+
+.v-content__wrap {
+  display: flex;
+  max-width: 90%;
+}
+
+.theme--dark.v-skeleton-loader .v-skeleton-loader__heading {
+  background: var(--v-surface-base);
+  width: 100%;
+}
+
+.theme--dark.v-pagination .v-pagination__navigation,
+.theme--dark.v-pagination .v-pagination__item {
+  background: var(--v-surface-base);
+  color: var(--v-text-base);
+}
