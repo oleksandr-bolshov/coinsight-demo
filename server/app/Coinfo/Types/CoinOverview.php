@@ -12,8 +12,8 @@ final class CoinOverview extends DataTransferObject
     public string $symbol;
     public string $icon;
     public int $rank;
-    public float $price;
-    public ?float $change24h;
+    public ?float $price;
+    public ?float $priceChange24h;
     public float $marketCap;
     public float $volume;
 }

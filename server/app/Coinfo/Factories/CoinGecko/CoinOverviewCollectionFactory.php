@@ -2,13 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Coinfo\Factories\CoinStats;
+namespace App\Coinfo\Factories\CoinGecko;
 
 use App\Coinfo\Types\CoinOverview;
 use App\Coinfo\Types\CoinOverviewCollection;
-use Exception;
 
-final class CoinCollectionFactory
+final class CoinOverviewCollectionFactory
 {
     public static function create(array $data): CoinOverviewCollection
     {
@@ -17,15 +16,15 @@ final class CoinCollectionFactory
                 return new CoinOverview([
                     'name' => $coin['name'],
                     'symbol' => $coin['symbol'],
-                    'icon' => $coin['icon'],
-                    'rank' => $coin['rank'],
-                    'price' => $coin['price'],
-                    'change24h' => $coin['priceChange1d'] ?? null,
-                    'marketCap' => $coin['marketCap'],
-                    'volume' => $coin['volume']
+                    'icon' => $coin['image'],
+                    'rank' => $coin['market_cap_rank'],
+                    'price' => $coin['current_price'],
+                    'priceChange24h' => $coin['price_change_percentage_24h'] ?? null,
+                    'marketCap' => $coin['market_cap'],
+                    'volume' => $coin['total_volume']
                 ]);
             },
-            $data['coins']
+            $data
         );
         return new CoinOverviewCollection($arrayOfCoins);
     }

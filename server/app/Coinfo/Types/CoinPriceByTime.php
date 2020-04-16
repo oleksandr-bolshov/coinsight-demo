@@ -7,7 +7,7 @@ namespace App\Coinfo\Types;
 use Carbon\Carbon;
 use Spatie\DataTransferObject\DataTransferObject;
 
-final class Historical extends DataTransferObject
+final class CoinPriceByTime extends DataTransferObject
 {
     public Carbon $timestamp;
     public float $price;

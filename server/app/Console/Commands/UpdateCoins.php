@@ -90,7 +90,7 @@ final class UpdateCoins extends Command
     private function makeCoinRecord(CoinOverview $coinOverview): array
     {
         try {
-            $iconUrl = $this->saveIcon($coinOverview->icon);
+            $iconUrl = $this->saveIcon($coinOverview);
         } catch (Exception $exception) {
             $this->addError($coinOverview, $exception);
         }
@@ -104,10 +104,15 @@ final class UpdateCoins extends Command
         ];
     }
 
-    private function saveIcon(string $iconUrl): string
+    private function saveIcon(CoinOverview $coinOverview): string
     {
-        $filename = Str::random() . '.png';
-        Storage::put('public/' . $filename, file_get_contents($iconUrl));
+        $filename = Str::slug($coinOverview->name) . '.png';
+        $filePath = 'public/' . $filename;
+
+        if (Storage::missing($filePath)) {
+            Storage::put($filePath, file_get_contents($coinOverview->icon));
+        }
+
         return Storage::url($filename);
     }
 

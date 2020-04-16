@@ -19,7 +19,6 @@ final class CoinMarketData extends DataTransferObject
     public float $marketCap;
     public float $marketCapChange;
     public float $change1h;
-    public float $change12h;
     public float $change24h;
     public float $change7d;
     public float $change30d;

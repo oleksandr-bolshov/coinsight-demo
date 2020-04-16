@@ -9,5 +9,5 @@ use Spatie\DataTransferObject\DataTransferObject;
 final class Link extends DataTransferObject
 {
     public string $type;
-    public string $url;
+    public string $link;
 }

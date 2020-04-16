@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Coinfo\Aggregators;
 
 use App\Coinfo\Exceptions\AggregatorApiUrl;
+use App\Coinfo\Exceptions\AggregatorRequest;
+use Illuminate\Http\Client\RequestException;
 use Illuminate\Support\Facades\Http;
 
 abstract class Aggregator
@@ -29,7 +31,11 @@ abstract class Aggregator
 
         $response = Http::get($this->getEndpointUrl($endpoint), $query);
 
-        $response->throw();
+        try {
+            $response->throw();
+        } catch (RequestException $exception) {
+            throw new AggregatorRequest($exception->getMessage());
+        }
 
         return $response->json();
     }

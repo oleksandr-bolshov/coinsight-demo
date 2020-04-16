@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Coinfo\Aggregators;
 
-use App\Coinfo\Factories\CoinStats\CoinCollectionFactory;
+use App\Coinfo\Factories\CoinStats\CoinOverviewCollectionFactory;
 use App\Coinfo\Types\CoinOverviewCollection;
 
 final class CoinStats extends Aggregator
@@ -18,6 +18,6 @@ final class CoinStats extends Aggregator
             'limit' => $limit,
         ]);
 
-        return CoinCollectionFactory::create($data);
+        return CoinOverviewCollectionFactory::create($data);
     }
 }

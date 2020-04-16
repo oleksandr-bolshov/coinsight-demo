@@ -20,8 +20,9 @@ final class GetCoinsInteractor
 
     public function execute(GetCoinsRequest $request): GetCoinsResponse
     {
-        $skip = ($request->page - 1) * $request->perPage;
-        $coinOverviewCollection = collect($this->client->markets($skip, $request->perPage));
+        $coinOverviewCollection = collect(
+            $this->client->markets($request->page, $request->perPage)
+        );
 
         $coinsNames = $coinOverviewCollection->pluck('name');
         $coinModelCollection = CoinModel::whereIn('name', $coinsNames)->get();
@@ -57,7 +58,7 @@ final class GetCoinsInteractor
             'icon' => $coinModel->icon,
             'rank' => $coinOverview->rank,
             'price' => $coinOverview->price,
-            'change24h' => $coinOverview->change24h ?? null,
+            'priceChange24h' => $coinOverview->change24h ?? null,
             'marketCap' => $coinOverview->marketCap,
             'volume' => $coinOverview->volume,
         ]);

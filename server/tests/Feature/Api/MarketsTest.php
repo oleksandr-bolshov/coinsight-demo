@@ -70,7 +70,7 @@ final class MarketsTest extends ApiTestCase
                         'icon',
                         'rank',
                         'price',
-                        'change_24h',
+                        'price_change_24h',
                         'market_cap',
                         'volume',
                     ]

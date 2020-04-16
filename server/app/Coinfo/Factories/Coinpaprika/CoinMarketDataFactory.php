@@ -23,7 +23,6 @@ final class CoinMarketDataFactory
             'marketCap' => $usdData['market_cap'],
             'marketCapChange' => $usdData['market_cap_change_24h'],
             'change1h' => $usdData['percent_change_1h'],
-            'change12h' => $usdData['percent_change_12h'],
             'change24h' => $usdData['percent_change_24h'],
             'change7d' => $usdData['percent_change_7d'],
             'change30d' => $usdData['percent_change_30d'],
