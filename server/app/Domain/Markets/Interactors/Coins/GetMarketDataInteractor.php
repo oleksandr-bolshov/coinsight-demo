@@ -10,7 +10,7 @@ use App\Domain\Markets\Exceptions\CoinNotFound;
 use App\Domain\Markets\Models\Coin as CoinModel;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-final class GetCoinMarketDataInteractor
+final class GetMarketDataInteractor
 {
     private Client $client;
 
@@ -19,7 +19,7 @@ final class GetCoinMarketDataInteractor
         $this->client = $client;
     }
 
-    public function execute(GetCoinMarketDataRequest $request): GetCoinMarketDataResponse
+    public function execute(GetMarketDataRequest $request): GetMarketDataResponse
     {
         try {
             $coin = CoinModel::findOrFail($request->id);
@@ -31,8 +31,8 @@ final class GetCoinMarketDataInteractor
 
         $marketDataArray = ['id' => $request->id] + $marketData->toArray();
 
-        return new GetCoinMarketDataResponse([
-            'coinMarketData' => new CoinMarketData($marketDataArray)
+        return new GetMarketDataResponse([
+            'marketData' => new CoinMarketData($marketDataArray)
         ]);
     }
 }

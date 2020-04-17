@@ -150,12 +150,10 @@ final class MarketsTest extends ApiTestCase
 
     public function test_historical_data()
     {
-        DB::table('coins')->insert([
+        $coinId = DB::table('coins')->insertGetId([
             'name' => 'currency name',
             'symbol' => 'symbol',
         ]);
-
-        $coinId = 1;
 
         $response = $this->apiGet("/coins/{$coinId}/historical", [
             'period' => '1w'

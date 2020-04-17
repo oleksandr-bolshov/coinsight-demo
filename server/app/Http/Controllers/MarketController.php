@@ -8,9 +8,9 @@ use App\Domain\Markets\Enums\ChartDays;
 use App\Domain\Markets\Interactors\Coins\GetHistoricalDataInteractor;
 use App\Domain\Markets\Interactors\Coins\GetHistoricalDataRequest;
 use App\Domain\Markets\Interactors\Coins\GetMarketDataInteractor;
-use App\Domain\Markets\Interactors\Coins\GetCoinMarketDataRequest;
-use App\Domain\Markets\Interactors\Coins\GetCoinProfileInteractor;
-use App\Domain\Markets\Interactors\Coins\GetCoinProfileRequest;
+use App\Domain\Markets\Interactors\Coins\GetMarketDataRequest;
+use App\Domain\Markets\Interactors\Coins\GetProfileInteractor;
+use App\Domain\Markets\Interactors\Coins\GetProfileRequest;
 use App\Domain\Markets\Interactors\Coins\GetCoinsInteractor;
 use App\Domain\Markets\Interactors\Coins\GetCoinsRequest;
 use App\Domain\Markets\Interactors\GlobalStats\GetGlobalStatsInteractor;
@@ -53,23 +53,23 @@ final class MarketController
     }
 
     public function getCoinProfile(
-        GetCoinProfileInteractor $coinProfileInteractor,
+        GetProfileInteractor $profileInteractor,
         int $id
     ): ApiResponse {
-        $coinProfile = $coinProfileInteractor
-            ->execute(new GetCoinProfileRequest(['id' => $id]))
-            ->coinProfile;
+        $coinProfile = $profileInteractor
+            ->execute(new GetProfileRequest(['id' => $id]))
+            ->profile;
 
         return ApiResponse::success(new CoinProfileResource($coinProfile));
     }
 
     public function getCoinMarketData(
-        GetCoinMarketDataInteractor $coinMarketDataInteractor,
+        GetMarketDataInteractor $marketDataInteractor,
         int $id
     ): ApiResponse {
-        $coinMarketData = $coinMarketDataInteractor
-            ->execute(new GetCoinMarketDataRequest(['id' => $id]))
-            ->coinMarketData;
+        $coinMarketData = $marketDataInteractor
+            ->execute(new GetMarketDataRequest(['id' => $id]))
+            ->marketData;
 
         return ApiResponse::success(new CoinMarketDataResource($coinMarketData));
     }

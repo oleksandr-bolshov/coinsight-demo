@@ -7,7 +7,7 @@ namespace App\Domain\Markets\Interactors\Coins;
 use Illuminate\Support\Collection;
 use Spatie\DataTransferObject\DataTransferObject;
 
-final class GetCoinHistoricalDataResponse extends DataTransferObject
+final class GetHistoricalDataResponse extends DataTransferObject
 {
-    public Collection $coinHistoricalData;
+    public Collection $historicalData;
 }

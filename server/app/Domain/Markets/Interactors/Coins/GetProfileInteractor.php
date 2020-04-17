@@ -13,7 +13,7 @@ use App\Domain\Markets\Models\CoinProfile as CoinProfileModel;
 use App\Domain\Markets\Models\CoinLink;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-final class GetCoinProfileInteractor
+final class GetProfileInteractor
 {
     private Client $client;
 
@@ -22,7 +22,7 @@ final class GetCoinProfileInteractor
         $this->client = $client;
     }
 
-    public function execute(GetCoinProfileRequest $request): GetCoinProfileResponse
+    public function execute(GetProfileRequest $request): GetProfileResponse
     {
         try {
             $coin = CoinModel::with(['profile', 'links'])->findOrFail($request->id);
@@ -37,8 +37,8 @@ final class GetCoinProfileInteractor
             $coin->refresh();
         }
 
-        return new GetCoinProfileResponse([
-            'coinProfile' => CoinProfileEntity::fromModel($coin)
+        return new GetProfileResponse([
+            'profile' => CoinProfileEntity::fromModel($coin)
         ]);
     }
 

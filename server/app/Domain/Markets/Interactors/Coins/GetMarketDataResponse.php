@@ -7,7 +7,7 @@ namespace App\Domain\Markets\Interactors\Coins;
 use App\Domain\Markets\Entities\CoinMarketData;
 use Spatie\DataTransferObject\DataTransferObject;
 
-final class GetCoinMarketDataResponse extends DataTransferObject
+final class GetMarketDataResponse extends DataTransferObject
 {
-    public CoinMarketData $coinMarketData;
+    public CoinMarketData $marketData;
 }

@@ -4,9 +4,11 @@ declare(strict_types=1);
 
 namespace App\Domain\Markets\Interactors\Coins;
 
+use App\Domain\Markets\Enums\ChartDays;
 use Spatie\DataTransferObject\DataTransferObject;
 
-final class GetCoinProfileRequest extends DataTransferObject
+final class GetHistoricalDataRequest extends DataTransferObject
 {
     public int $id;
+    public ChartDays $days;
 }
