@@ -32,4 +32,5 @@ Route::group([
     'middleware' => 'token:access'
 ], function () {
     Route::get('/', 'MarketController@getCoins');
+    Route::get('/{id}/profile', 'MarketController@getCoinProfile');
 });

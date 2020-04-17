@@ -83,4 +83,38 @@ final class MarketsTest extends ApiTestCase
             ]
         ]);
     }
+
+    public function test_profile()
+    {
+        DB::table('coins')->insert([
+            'name' => 'currency name',
+            'symbol' => 'symbol',
+        ]);
+
+        $coinId = 1;
+
+        $response = $this->apiGet("/coins/{$coinId}/profile");
+
+        $response->assertStatus(Response::HTTP_OK)->assertJsonStructure([
+            'data' => [
+                'id',
+                'name',
+                'symbol',
+                'icon',
+                'tagline',
+                'description',
+                'type',
+                'genesis_date',
+                'consensus_mechanism',
+                'hashing_algorithm',
+                'links' => [
+                    '*' => [
+                        'type',
+                        'link',
+                    ]
+                ],
+            ],
+            'meta' => []
+        ]);
+    }
 }

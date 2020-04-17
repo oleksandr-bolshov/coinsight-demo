@@ -4,12 +4,15 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Domain\Markets\Interactors\Coins\GetCoinProfileInteractor;
+use App\Domain\Markets\Interactors\Coins\GetCoinProfileRequest;
 use App\Domain\Markets\Interactors\Coins\GetCoinsInteractor;
 use App\Domain\Markets\Interactors\Coins\GetCoinsRequest;
 use App\Domain\Markets\Interactors\GlobalStats\GetGlobalStatsInteractor;
 use App\Http\ApiResponse;
 use App\Http\Requests\Markets\GetCoinsApiRequest;
 use App\Http\Resources\Markets\CoinCollectionResource;
+use App\Http\Resources\Markets\CoinProfileResource;
 use App\Http\Resources\Markets\GlobalStatsResource;
 
 final class MarketController
@@ -39,5 +42,14 @@ final class MarketController
                 'per_page' => $coinsResponse->perPage,
             ]
         );
+    }
+
+    public function getCoinProfile(GetCoinProfileInteractor $coinProfileInteractor, int $id): ApiResponse
+    {
+        $coinProfile = $coinProfileInteractor
+            ->execute(new GetCoinProfileRequest(['id' => $id]))
+            ->coinProfile;
+
+        return ApiResponse::success(new CoinProfileResource($coinProfile));
     }
 }

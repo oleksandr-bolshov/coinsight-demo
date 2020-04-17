@@ -178,39 +178,41 @@ trait CoinfoDataProvider
     public function fakeCoinProfileResponse(): array
     {
         return [
-            'name' => 'name',
-            'symbol' => null,
-            'profile' => [
-                'general' => [
-                    'overview' => [
-                        'tagline' => 'tagline',
-                        'project_details' => 'project_details',
-                        'official_links' => [
-                            [
-                                'name' => 'name1',
-                                'link' => null,
-                            ],
-                            [
-                                'name' => 'name2',
-                                'link' => 'link',
+            'data' => [
+                'name' => 'name',
+                'symbol' => null,
+                'profile' => [
+                    'general' => [
+                        'overview' => [
+                            'tagline' => 'tagline',
+                            'project_details' => 'project_details',
+                            'official_links' => [
+                                [
+                                    'name' => 'name1',
+                                    'link' => null,
+                                ],
+                                [
+                                    'name' => 'name2',
+                                    'link' => 'link',
+                                ]
                             ]
-                        ]
+                        ],
                     ],
-                ],
-                'economics' => [
-                    'token' => [
-                        'token_type' => 'token_type',
-                        'block_explorers' => null,
-                    ],
-                    'launch' => [
-                        'initial_distribution' => [
-                            'genesis_block_date' => '2009-01-03T09:00:00Z'
-                        ]
-                    ],
-                    'consensus_and_emission' => [
-                        'consensus' => [
-                            'general_consensus_mechanism' => 'general_consensus_mechanism',
-                            'mining_algorithm' => 'mining_algorithm'
+                    'economics' => [
+                        'token' => [
+                            'token_type' => 'token_type',
+                            'block_explorers' => null,
+                        ],
+                        'launch' => [
+                            'initial_distribution' => [
+                                'genesis_block_date' => '2009-01-03T09:00:00Z'
+                            ]
+                        ],
+                        'consensus_and_emission' => [
+                            'consensus' => [
+                                'general_consensus_mechanism' => 'general_consensus_mechanism',
+                                'mining_algorithm' => 'mining_algorithm'
+                            ],
                         ],
                     ],
                 ],
