@@ -5,9 +5,9 @@ declare(strict_types=1);
 namespace App\Coinfo\Aggregators;
 
 use App\Coinfo\Factories\CoinGecko\CoinOverviewCollectionFactory;
-use App\Coinfo\Factories\CoinGecko\CoinPriceByTimeCollectionFactory;
+use App\Coinfo\Factories\CoinGecko\CoinHistoricalDataCollectionFactory;
 use App\Coinfo\Types\CoinOverviewCollection;
-use App\Coinfo\Types\CoinPriceByTimeCollection;
+use App\Coinfo\Types\CoinHistoricalDataCollection;
 
 final class CoinGecko extends Aggregator
 {
@@ -30,13 +30,13 @@ final class CoinGecko extends Aggregator
         return CoinOverviewCollectionFactory::create($data);
     }
 
-    public function coinMarketChart(string $id, int $days): CoinPriceByTimeCollection
+    public function coinMarketChart(string $id, $days): CoinHistoricalDataCollection
     {
         $data = $this->request("/coins/{$id}/market_chart", [
             'vs_currency' => 'usd',
             'days' => $days,
         ]);
 
-        return CoinPriceByTimeCollectionFactory::create($data);
+        return CoinHistoricalDataCollectionFactory::create($data);
     }
 }

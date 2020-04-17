@@ -7,10 +7,10 @@ namespace App\Coinfo\Aggregators;
 use App\Coinfo\Enums\Interval;
 use App\Coinfo\Factories\Coinpaprika\CoinMarketDataFactory;
 use App\Coinfo\Factories\Coinpaprika\GlobalStatsFactory;
-use App\Coinfo\Factories\Coinpaprika\CoinPriceByTimeCollectionFactory;
+use App\Coinfo\Factories\Coinpaprika\CoinHistoricalDataCollectionFactory;
 use App\Coinfo\Types\CoinMarketData;
 use App\Coinfo\Types\GlobalStats;
-use App\Coinfo\Types\CoinPriceByTimeCollection;
+use App\Coinfo\Types\CoinHistoricalDataCollection;
 use Carbon\Carbon;
 
 final class Coinpaprika extends Aggregator
@@ -35,7 +35,7 @@ final class Coinpaprika extends Aggregator
         ?Carbon $end = null,
         int $limit = 1000,
         ?Interval $interval = null
-    ): CoinPriceByTimeCollection {
+    ): CoinHistoricalDataCollection {
         $end ??= $now = Carbon::now();
         $start ??= $now->subDay();
         $interval ??= Interval::FIVE_MINUTES;
@@ -47,6 +47,6 @@ final class Coinpaprika extends Aggregator
             'interval' => $interval
         ]);
 
-        return CoinPriceByTimeCollectionFactory::create($data);
+        return CoinHistoricalDataCollectionFactory::create($data);
     }
 }

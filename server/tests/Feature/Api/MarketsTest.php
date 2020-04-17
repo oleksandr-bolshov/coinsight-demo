@@ -147,4 +147,32 @@ final class MarketsTest extends ApiTestCase
             'meta' => []
         ]);
     }
+
+    public function test_historical_data()
+    {
+        DB::table('coins')->insert([
+            'name' => 'currency name',
+            'symbol' => 'symbol',
+        ]);
+
+        $coinId = 1;
+
+        $response = $this->apiGet("/coins/{$coinId}/historical", [
+            'period' => '1w'
+        ]);
+
+        $response->assertStatus(Response::HTTP_OK)->assertJsonStructure([
+            'data' => [
+                'historical_data' => [
+                    '*' => [
+                        'timestamp',
+                        'price',
+                        'market_cap',
+                        'volume',
+                    ],
+                ],
+            ],
+            'meta' => []
+        ]);
+    }
 }

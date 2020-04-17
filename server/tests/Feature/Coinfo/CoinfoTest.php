@@ -112,9 +112,9 @@ final class CoinfoTest extends TestCase
 
     public function test_coin_price_by_time_range()
     {
-        $expectedResponse = $this->fakeCoinPriceByTimeRangeResponse();
+        $expectedResponse = $this->fakeCoinHistoricalDataByDateRangeResponse();
 
-        $priceByTimeRange = $this->client->coinPriceByTimeRange(
+        $priceByTimeRange = $this->client->coinHistoricalDataByDateRange(
             $this->currencyName(),
             $this->currencySymbol(),
             $start = $now = Carbon::now(),
@@ -138,9 +138,9 @@ final class CoinfoTest extends TestCase
 
     public function test_coin_price_by_time()
     {
-        $expectedResponse = $this->fakeCoinPriceByTimeResponse();
+        $expectedResponse = $this->fakeCoinHistoricalDataResponse();
 
-        $priceByTime = $this->client->coinPriceByTime($this->currencyName(), $days = 3);
+        $priceByTime = $this->client->coinHistoricalData($this->currencyName(), $days = 3);
 
         $this->assertCount(count($expectedResponse['prices']), $priceByTime);
 

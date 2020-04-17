@@ -62,19 +62,19 @@ trait CoinfoDataProvider
                 ),
                 'response' => $this->fakeCoinMarketDataResponse(),
             ],
-            'coinPriceByTimeRange' => [
+            'coinHistoricalDataByDateRange' => [
                 'url' => $this->getEndpointUrlWithWildcard(
                     Coinpaprika::BASE_URL,
                     'tickers/symbol-currency-name/historical',
                 ),
-                'response' => $this->fakeCoinPriceByTimeRangeResponse(),
+                'response' => $this->fakeCoinHistoricalDataByDateRangeResponse(),
             ],
-            '' => [
+            'coinHistoricalData' => [
                 'url' => $this->getEndpointUrlWithWildcard(
                     CoinGecko::BASE_URL,
                     '/coins/currency-name/market_chart',
                 ),
-                'response' => $this->fakeCoinPriceByTimeResponse(),
+                'response' => $this->fakeCoinHistoricalDataResponse(),
             ],
             'coinOHLCV' => [
                 'url' => $this->getEndpointUrlWithWildcard(
@@ -246,7 +246,7 @@ trait CoinfoDataProvider
         ];
     }
 
-    public function fakeCoinPriceByTimeRangeResponse(): array
+    public function fakeCoinHistoricalDataByDateRangeResponse(): array
     {
         return [
             [
@@ -270,7 +270,7 @@ trait CoinfoDataProvider
         ];
     }
 
-    public function fakeCoinPriceByTimeResponse(): array
+    public function fakeCoinHistoricalDataResponse(): array
     {
         return [
             'prices' => [

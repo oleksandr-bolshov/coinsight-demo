@@ -6,9 +6,9 @@ namespace App\Coinfo\Types;
 
 use Spatie\DataTransferObject\DataTransferObjectCollection;
 
-final class CoinPriceByTimeCollection extends DataTransferObjectCollection
+final class CoinHistoricalDataCollection extends DataTransferObjectCollection
 {
-    public function current(): CoinPriceByTime
+    public function current(): CoinHistoricalData
     {
         return parent::current();
     }

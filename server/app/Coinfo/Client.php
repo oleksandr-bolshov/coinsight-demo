@@ -14,7 +14,7 @@ use App\Coinfo\Types\CoinProfile;
 use App\Coinfo\Types\CoinMarketData;
 use App\Coinfo\Types\CoinOHLCVCollection;
 use App\Coinfo\Types\GlobalStats;
-use App\Coinfo\Types\CoinPriceByTimeCollection;
+use App\Coinfo\Types\CoinHistoricalDataCollection;
 use Carbon\Carbon;
 use Illuminate\Support\Str;
 
@@ -59,14 +59,14 @@ final class Client
         );
     }
 
-    public function coinPriceByTimeRange(
+    public function coinHistoricalDataByDateRange(
         string $currencyName,
         string $currencySymbol,
         ?Carbon $start = null,
         ?Carbon $end = null,
         int $limit = 1000,
         ?Interval $interval = null
-    ): CoinPriceByTimeCollection {
+    ): CoinHistoricalDataCollection {
         return $this->coinpaprika->tickerHistoricalByCoinId(
             $this->getCoinpaprikaCoinId($currencyName, $currencySymbol),
             $start,
@@ -76,8 +76,13 @@ final class Client
         );
     }
 
-    public function coinPriceByTime(string $currencyName, int $days): CoinPriceByTimeCollection {
+    public function coinHistoricalData(string $currencyName, int $days): CoinHistoricalDataCollection {
         return $this->coinGecko->coinMarketChart(Str::slug($currencyName), $days);
+    }
+
+    public function coinHistoricalDataAllTime(string $currencyName): CoinHistoricalDataCollection
+    {
+        return $this->coinGecko->coinMarketChart(Str::slug($currencyName), 'max');
     }
 
     public function coinOHLCV(
