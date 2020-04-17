@@ -33,4 +33,5 @@ Route::group([
 ], function () {
     Route::get('/', 'MarketController@getCoins');
     Route::get('/{id}/profile', 'MarketController@getCoinProfile');
+    Route::get('/{id}/latest', 'MarketController@getCoinMarketData');
 });

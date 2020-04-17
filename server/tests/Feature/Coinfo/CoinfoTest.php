@@ -49,7 +49,7 @@ final class CoinfoTest extends TestCase
             $this->assertEquals($expectedResponse[$i]['image'], $markets[$i]->icon);
             $this->assertEquals($expectedResponse[$i]['market_cap_rank'], $markets[$i]->rank);
             $this->assertEquals($expectedResponse[$i]['current_price'], $markets[$i]->price);
-            $this->assertEquals($expectedResponse[$i]['price_change_percentage_24h'], $markets[$i]->change24h);
+            $this->assertEquals($expectedResponse[$i]['price_change_percentage_24h'], $markets[$i]->priceChange24h);
             $this->assertEquals($expectedResponse[$i]['market_cap'], $markets[$i]->marketCap);
             $this->assertEquals($expectedResponse[$i]['total_volume'], $markets[$i]->volume);
         }
@@ -57,7 +57,7 @@ final class CoinfoTest extends TestCase
 
     public function test_coin_profile()
     {
-        $expectedResponse = $this->fakeCoinProfileResponse();
+        $expectedResponse = $this->fakeCoinProfileResponse()['data'];
         $expectedOverview = $expectedResponse['profile']['general']['overview'];
         $expectedEconomics = $expectedResponse['profile']['economics'];
         $expectedConsensus = $expectedResponse['profile']['economics']['consensus_and_emission']['consensus'];
@@ -100,14 +100,14 @@ final class CoinfoTest extends TestCase
         $quote = $expectedResponse['quotes']['USD'];
         $this->assertEquals($quote['price'], $marketData->price);
         $this->assertEquals($quote['volume_24h'], $marketData->volume);
-        $this->assertEquals($quote['volume_24h_change_24h'], $marketData->volumeChange);
+        $this->assertEquals($quote['volume_24h_change_24h'], $marketData->volumeChange24h);
         $this->assertEquals($quote['market_cap'], $marketData->marketCap);
-        $this->assertEquals($quote['market_cap_change_24h'], $marketData->marketCapChange);
-        $this->assertEquals($quote['percent_change_1h'], $marketData->change1h);
-        $this->assertEquals($quote['percent_change_24h'], $marketData->change24h);
-        $this->assertEquals($quote['percent_change_7d'], $marketData->change7d);
-        $this->assertEquals($quote['percent_change_30d'], $marketData->change30d);
-        $this->assertEquals($quote['percent_change_1y'], $marketData->change1y);
+        $this->assertEquals($quote['market_cap_change_24h'], $marketData->marketCapChange24h);
+        $this->assertEquals($quote['percent_change_1h'], $marketData->priceChange1h);
+        $this->assertEquals($quote['percent_change_24h'], $marketData->priceChange24h);
+        $this->assertEquals($quote['percent_change_7d'], $marketData->priceChange7d);
+        $this->assertEquals($quote['percent_change_30d'], $marketData->priceChange30d);
+        $this->assertEquals($quote['percent_change_1y'], $marketData->priceChange1y);
     }
 
     public function test_coin_price_by_time_range()

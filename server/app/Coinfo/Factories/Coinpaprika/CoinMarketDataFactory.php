@@ -19,14 +19,14 @@ final class CoinMarketDataFactory
             'maxSupply' => $data['max_supply'],
             'price' => $usdData['price'],
             'volume' => $usdData['volume_24h'],
-            'volumeChange' => $usdData['volume_24h_change_24h'],
+            'volumeChange24h' => $usdData['volume_24h_change_24h'],
             'marketCap' => $usdData['market_cap'],
-            'marketCapChange' => $usdData['market_cap_change_24h'],
-            'change1h' => $usdData['percent_change_1h'],
-            'change24h' => $usdData['percent_change_24h'],
-            'change7d' => $usdData['percent_change_7d'],
-            'change30d' => $usdData['percent_change_30d'],
-            'change1y' => $usdData['percent_change_1y'],
+            'marketCapChange24h' => $usdData['market_cap_change_24h'],
+            'priceChange1h' => $usdData['percent_change_1h'],
+            'priceChange24h' => $usdData['percent_change_24h'],
+            'priceChange7d' => $usdData['percent_change_7d'],
+            'priceChange30d' => $usdData['percent_change_30d'],
+            'priceChange1y' => $usdData['percent_change_1y'],
         ]);
     }
 }

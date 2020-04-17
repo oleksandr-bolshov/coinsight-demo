@@ -2,12 +2,13 @@
 
 declare(strict_types=1);
 
-namespace App\Coinfo\Types;
+namespace App\Domain\Markets\Entities;
 
 use Spatie\DataTransferObject\DataTransferObject;
 
 final class CoinMarketData extends DataTransferObject
 {
+    public int $id;
     public string $name;
     public string $symbol;
     public int $rank;
