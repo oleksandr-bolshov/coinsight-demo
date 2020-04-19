@@ -16,7 +16,7 @@ final class CoinProfileResource extends JsonResource implements Response
             'id' => $this->id,
             'name' => $this->name,
             'symbol' => $this->symbol,
-            'icon' => $this->icon,
+            'icon' => url($this->icon),
             'tagline' => $this->tagline,
             'description' => $this->description,
             'type' => $this->type,
