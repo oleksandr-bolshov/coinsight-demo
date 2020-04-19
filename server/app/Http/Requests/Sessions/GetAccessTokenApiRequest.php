@@ -10,9 +10,4 @@ use App\Http\Requests\AuthContextTrait;
 final class GetAccessTokenApiRequest extends ApiRequest
 {
     use AuthContextTrait;
-
-    public function rules(): array
-    {
-        return [];
-    }
 }

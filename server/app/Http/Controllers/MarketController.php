@@ -16,6 +16,8 @@ use App\Domain\Markets\Interactors\Coins\GetCoinsRequest;
 use App\Domain\Markets\Interactors\GlobalStats\GetGlobalStatsInteractor;
 use App\Http\ApiResponse;
 use App\Http\Requests\Markets\GetCoinHistoricalDataApiRequest;
+use App\Http\Requests\Markets\GetCoinMarketDataApiRequest;
+use App\Http\Requests\Markets\GetCoinProfileApiRequest;
 use App\Http\Requests\Markets\GetCoinsApiRequest;
 use App\Http\Resources\Markets\CoinCollectionResource;
 use App\Http\Resources\Markets\CoinHistoricalDataCollectionResource;
@@ -53,22 +55,22 @@ final class MarketController
     }
 
     public function getCoinProfile(
-        GetProfileInteractor $profileInteractor,
-        int $id
+        GetCoinProfileApiRequest $request,
+        GetProfileInteractor $profileInteractor
     ): ApiResponse {
         $coinProfile = $profileInteractor
-            ->execute(new GetProfileRequest(['id' => $id]))
+            ->execute(new GetProfileRequest(['id' => $request->id()]))
             ->profile;
 
         return ApiResponse::success(new CoinProfileResource($coinProfile));
     }
 
     public function getCoinMarketData(
-        GetMarketDataInteractor $marketDataInteractor,
-        int $id
+        GetCoinMarketDataApiRequest $request,
+        GetMarketDataInteractor $marketDataInteractor
     ): ApiResponse {
         $coinMarketData = $marketDataInteractor
-            ->execute(new GetMarketDataRequest(['id' => $id]))
+            ->execute(new GetMarketDataRequest(['id' => $request->id()]))
             ->marketData;
 
         return ApiResponse::success(new CoinMarketDataResource($coinMarketData));

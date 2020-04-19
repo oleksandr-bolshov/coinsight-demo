@@ -8,7 +8,7 @@ use App\Http\Requests\ApiRequest;
 
 final class LoginApiRequest extends ApiRequest
 {
-    public function rules()
+    public function rules(): array
     {
         return [
             'username' => 'required',

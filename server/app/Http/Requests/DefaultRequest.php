@@ -7,9 +7,4 @@ namespace App\Http\Requests;
 final class DefaultRequest extends ApiRequest
 {
     use AuthContextTrait;
-
-    public function rules(): array
-    {
-        return [];
-    }
 }
