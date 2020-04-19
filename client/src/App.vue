@@ -45,9 +45,9 @@
       app
       floating
       clipped
-      :mini-variant="false"
       width="76"
       class="navigation-drawer"
+      v-model="displayDrawer"
     >
       <v-list class="sidebar" dense>
         <v-list-item
@@ -141,6 +141,13 @@ export default {
       isLoggedIn: IS_LOGGED_IN,
       hasTokens: HAS_TOKENS,
     }),
+
+    displayDrawer: {
+      set() {},
+      get() {
+        return this.isLoggedIn;
+      },
+    },
   },
 };
 </script>

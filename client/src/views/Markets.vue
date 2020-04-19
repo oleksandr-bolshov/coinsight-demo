@@ -5,11 +5,10 @@
         <div class="subtitle-1">Market Cap</div>
         <div class="title" v-if="!isGlobalStatsLoading">
           <div v-if="'marketCap' in globalStats">
-            {{ marketValueFormatter.format(globalStats.marketCap) }}
+            {{ globalStats.marketCap | formatMarketValue }}
             <span
-              :class="
-                'subtitle-1 ' + percentColorClass(globalStats.marketCapChange)
-              "
+              class="subtitle-1"
+              :class="percentColorClass(globalStats.marketCapChange)"
             >
               {{ globalStats.marketCapChange | formatPercent }}
             </span>
@@ -23,11 +22,10 @@
         <div class="subtitle-1">Volume</div>
         <div class="title" v-if="!isGlobalStatsLoading">
           <div v-if="'volume' in globalStats">
-            {{ marketValueFormatter.format(globalStats.volume) }}
+            {{ globalStats.volume | formatMarketValue }}
             <span
-              :class="
-                'subtitle-1 ' + percentColorClass(globalStats.volumeChange)
-              "
+              class="subtitle-1"
+              :class="percentColorClass(globalStats.volumeChange)"
             >
               {{ globalStats.volumeChange | formatPercent }}
             </span>
@@ -59,37 +57,36 @@
         :loading="isCoinsLoading"
       >
         <template v-slot:item.coin="{item}">
-          <div class="d-flex">
+          <router-link
+            :to="{name: 'coin', params: {id: item.id}}"
+            class="d-flex"
+          >
             <div class="d-flex align-center">
-              <v-img
-                :src="`http://coinsight.fun${item.icon}`"
-                width="2em"
-                height="auto"
-              />
+              <v-img :src="item.icon" width="2em" height="auto" />
             </div>
             <div class="ml-4">
-              <div class="symbol">{{ item.symbol }}</div>
+              <div class="symbol">{{ item.symbol.toUpperCase() }}</div>
               <small class="name">{{ item.name }}</small>
             </div>
-          </div>
+          </router-link>
         </template>
 
         <template v-slot:item.price="{item}">
-          {{ priceFormatter.format(item.price) }}
+          {{ item.price | formatMarketValue }}
         </template>
 
-        <template v-slot:item.change24H="{item}">
-          <span :class="percentColorClass(item.change24H)">
-            {{ item.change24H | formatPercent }}
+        <template v-slot:item.priceChange24H="{item}">
+          <span :class="percentColorClass(item.priceChange24H)">
+            {{ item.priceChange24H | formatPercent }}
           </span>
         </template>
 
         <template v-slot:item.marketCap="{item}">
-          {{ marketValueFormatter.format(item.marketCap) }}
+          {{ item.marketCap | formatMarketValue }}
         </template>
 
         <template v-slot:item.volume="{item}">
-          {{ marketValueFormatter.format(item.volume) }}
+          {{ item.volume | formatMarketValue }}
         </template>
       </v-data-table>
       <v-row class="mt-2 d-flex justify-end">
@@ -118,6 +115,7 @@
 
 <script>
 import {globalStats, coins} from '../api/markets';
+import {formatMarketValue, formatPercent} from '../filters';
 
 export default {
   name: 'Markets',
@@ -127,22 +125,8 @@ export default {
     this.fetchCoins();
   },
 
-  mounted() {
-    this.priceFormatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-    });
-    this.marketValueFormatter = new Intl.NumberFormat('en-US', {
-      style: 'currency',
-      currency: 'USD',
-      minimumFractionDigits: 0,
-    });
-  },
-
   data() {
     return {
-      priceFormatter: null,
-      marketValueFormatter: null,
       isGlobalStatsLoading: false,
       isCoinsLoading: false,
       page: 1,
@@ -151,7 +135,7 @@ export default {
         {text: '#', value: 'rank', width: '2%'},
         {text: 'Coin', value: 'coin', width: '25%'},
         {text: 'Price', value: 'price'},
-        {text: 'Change (24h)', value: 'change24H'},
+        {text: 'Change (24h)', value: 'priceChange24H'},
         {text: 'Market Cap', value: 'marketCap'},
         {text: 'Volume', value: 'volume'},
       ],
@@ -204,7 +188,11 @@ export default {
 
   filters: {
     formatPercent(percent) {
-      return (percent > 0 ? '+' + percent : percent) + '%';
+      return formatPercent(percent);
+    },
+
+    formatMarketValue(value) {
+      return formatMarketValue(value);
     },
   },
 };

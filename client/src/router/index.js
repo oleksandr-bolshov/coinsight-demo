@@ -6,6 +6,7 @@ import Login from '../views/Login';
 import AuthGuard from '../components/AuthGuard';
 import Register from '../views/Register';
 import Markets from '../views/Markets';
+import Coin from '../views/Coin';
 
 Vue.use(VueRouter);
 
@@ -35,7 +36,15 @@ const routes = [
     name: 'markets',
     component: Markets,
     meta: {
-      requiresAuth: false,
+      requiresAuth: true,
+    },
+  },
+  {
+    path: '/coins/:id',
+    name: 'coin',
+    component: Coin,
+    meta: {
+      requiresAuth: true,
     },
   },
   {

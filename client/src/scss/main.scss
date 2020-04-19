@@ -53,23 +53,11 @@
   color: var(--v-text-base);
 }
 
-.horizontal-line {
+.v-content__wrap {
   display: flex;
-  flex-direction: row;
+  padding: 1em 2em;
 }
 
-.horizontal-line:before,
-.horizontal-line:after {
-  content: '';
-  flex: 1 1;
-  border-bottom: 1px solid #8a899c;
-  margin: auto;
-}
-
-.horizontal-line:before {
-  margin-right: 0.5em;
-}
-
-.horizontal-line:after {
-  margin-left: 0.5em;
+a {
+  text-decoration: none;
 }

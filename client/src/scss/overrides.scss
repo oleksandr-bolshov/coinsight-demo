@@ -5,12 +5,13 @@
 
 .theme--dark.v-app-bar.v-toolbar.v-sheet,
 .theme--dark.v-navigation-drawer,
-.theme--dark.v-navigation-drawer .v-list {
+.theme--dark.v-list {
   background-color: var(--v-surface-base);
 }
 
 .theme--dark.v-card {
   background-color: var(--v-surface-base);
+  padding: .5em .25em;
 }
 
 .theme--dark.v-btn {
@@ -40,17 +41,8 @@
   border-radius: inherit;
 }
 
-.v-card {
-  padding: .5em .25em;
-}
-
 .v-content {
   justify-content: center;
-}
-
-.v-content__wrap {
-  display: flex;
-  max-width: 90%;
 }
 
 .theme--dark.v-skeleton-loader .v-skeleton-loader__heading {
