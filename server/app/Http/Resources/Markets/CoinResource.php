@@ -16,11 +16,6 @@ final class CoinResource extends JsonResource implements Response
             'name' => $this->name,
             'symbol' => $this->symbol,
             'icon' => url($this->icon),
-            'rank' => $this->rank,
-            'price' => $this->price,
-            'price_change_24h' => $this->priceChange24h,
-            'market_cap' => $this->marketCap,
-            'volume' => $this->volume,
         ];
     }
 }

@@ -19,7 +19,7 @@ use App\Http\Requests\Markets\GetCoinHistoricalDataApiRequest;
 use App\Http\Requests\Markets\GetCoinMarketDataApiRequest;
 use App\Http\Requests\Markets\GetCoinProfileApiRequest;
 use App\Http\Requests\Markets\GetCoinsApiRequest;
-use App\Http\Resources\Markets\CoinCollectionResource;
+use App\Http\Resources\Markets\CoinOverviewCollectionResource;
 use App\Http\Resources\Markets\CoinHistoricalDataCollectionResource;
 use App\Http\Resources\Markets\CoinMarketDataResource;
 use App\Http\Resources\Markets\CoinProfileResource;
@@ -45,7 +45,7 @@ final class MarketController
         );
 
         return ApiResponse::success(
-            new CoinCollectionResource($coinsResponse->coins),
+            new CoinOverviewCollectionResource($coinsResponse->coins),
             [
                 'total' => $coinsResponse->total,
                 'page' => $coinsResponse->page,

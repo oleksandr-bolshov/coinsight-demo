@@ -44,3 +44,10 @@ Route::group([
     Route::post('/', 'PortfolioController@createPortfolio');
     Route::get('/', 'PortfolioController@getPortfolios');
 });
+
+Route::group([
+    'prefix' => 'transactions',
+    'middleware' => 'token:access',
+], function () {
+    Route::post('/', 'TransactionController@createTransaction');
+});
