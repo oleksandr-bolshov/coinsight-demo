@@ -25,4 +25,31 @@ final class PortfoliosTest extends ApiTestCase
             'meta' => [],
         ]);
     }
+
+    public function test_get_portfolios()
+    {
+        $response = $this->apiGet('/portfolios');
+
+        $response->assertStatus(Response::HTTP_OK)->assertJsonStructure([
+            'data' => [
+                'portfolios' => [
+                    '*' => [
+                        'id',
+                        'name',
+                    ],
+                ],
+            ],
+            'meta' => [],
+        ]);
+    }
+
+    public function test_get_portfolios_when_no_portfolios()
+    {
+        $response = $this->apiGet('/portfolios');
+
+        $response->assertStatus(Response::HTTP_OK)->assertJsonStructure([
+            'data' => [],
+            'meta' => [],
+        ]);
+    }
 }

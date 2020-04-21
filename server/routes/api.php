@@ -42,4 +42,5 @@ Route::group([
     'middleware' => 'token:access',
 ], function () {
     Route::post('/', 'PortfolioController@createPortfolio');
+    Route::get('/', 'PortfolioController@getPortfolios');
 });
