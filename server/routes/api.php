@@ -36,3 +36,10 @@ Route::group([
     Route::get('/{id}/latest', 'MarketController@getCoinMarketData');
     Route::get('/{id}/historical', 'MarketController@getCoinHistoricalData');
 });
+
+Route::group([
+    'prefix' => 'portfolios',
+    'middleware' => 'token:access',
+], function () {
+    Route::post('/', 'PortfolioController@createPortfolio');
+});
