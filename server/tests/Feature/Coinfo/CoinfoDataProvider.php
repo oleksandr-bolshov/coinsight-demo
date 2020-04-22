@@ -164,8 +164,8 @@ trait CoinfoDataProvider
             ],
             [
                 'image' => 'icon3',
-                'name' => 'name3',
-                'symbol' => 'symbol3',
+                'name' => 'Currency Name',
+                'symbol' => 'SYMBOL',
                 'market_cap_rank' => 3,
                 'current_price' => 123.45,
                 'total_volume' => 123.45,

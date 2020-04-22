@@ -47,6 +47,15 @@ final class Client
         return $this->coinGecko->coinsMarkets($page, $perPage);
     }
 
+    public function marketsForCoins(array $currenciesNames): CoinOverviewCollection
+    {
+        $slugged = array_map(
+            fn(string $currencyName) => Str::slug($currencyName),
+            $currenciesNames
+        );
+        return $this->coinGecko->coinMarketsForCoins($slugged);
+    }
+
     public function coinProfile(string $currencyName): CoinProfile
     {
         return $this->messari->assetProfile(Str::slug($currencyName));

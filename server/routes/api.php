@@ -50,4 +50,5 @@ Route::group([
     'middleware' => 'token:access',
 ], function () {
     Route::post('/', 'TransactionController@createTransaction');
+    Route::get('/', 'TransactionController@getTransactions');
 });

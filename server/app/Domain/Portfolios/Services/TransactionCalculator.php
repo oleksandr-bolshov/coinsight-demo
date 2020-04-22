@@ -11,9 +11,9 @@ final class TransactionCalculator
         return $quantity * $pricePerCoin + $fee;
     }
 
-    public function value(float $quantity, float $currentPrice): float
+    public function value(float $quantity, float $price): float
     {
-        return $quantity * $currentPrice;
+        return $quantity * $price;
     }
 
     public function valueChange(float $currentValue, float $cost): float
