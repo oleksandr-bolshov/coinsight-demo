@@ -19,14 +19,21 @@ final class GetPortfoliosInteractor
 
     public function execute(GetPortfoliosRequest $request): GetPortfoliosResponse
     {
-        $portfolios = $this->portfolioService->getCollectionByUserId($request->userId);
+        $portfoliosPaginator = $this->portfolioService->paginateByUserId(
+            $request->userId, $request->page, $request->perPage, $request->sort, $request->direction
+        );
 
-        $portfolios = $portfolios->map(
-            fn (Portfolio $portfolio) => PortfolioEntity::fromModel($portfolio)
+        $portfoliosPaginator->setCollection(
+            $portfoliosPaginator->toBase()
+                ->map(fn (Portfolio $session) => PortfolioEntity::fromModel($session))
         );
 
         return new GetPortfoliosResponse([
-            'portfolios' => $portfolios,
+            'portfolios' => $portfoliosPaginator->getCollection(),
+            'total' => $portfoliosPaginator->total(),
+            'page' => $portfoliosPaginator->currentPage(),
+            'perPage' => $portfoliosPaginator->perPage(),
+            'lastPage' => $portfoliosPaginator->lastPage(),
         ]);
     }
 }

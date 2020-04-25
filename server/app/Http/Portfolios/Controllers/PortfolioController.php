@@ -9,6 +9,7 @@ use App\Domain\Portfolios\Interactors\Portfolios\CreatePortfolioRequest;
 use App\Domain\Portfolios\Interactors\Portfolios\GetPortfoliosInteractor;
 use App\Domain\Portfolios\Interactors\Portfolios\GetPortfoliosRequest;
 use App\Http\Portfolios\Requests\CreatePortfolioApiRequest;
+use App\Http\Portfolios\Requests\GetPortfoliosApiRequest;
 use App\Http\Portfolios\Resources\PortfolioCollectionResource;
 use App\Http\Portfolios\Resources\PortfolioResource;
 use App\Http\Common\ApiResponse;
@@ -31,15 +32,27 @@ final class PortfolioController
     }
 
     public function getPortfolios(
-        DefaultRequest $request,
+        GetPortfoliosApiRequest $request,
         GetPortfoliosInteractor $portfoliosInteractor
     ): ApiResponse {
-        $portfolios = $portfoliosInteractor
-            ->execute(new GetPortfoliosRequest([
+        $portfoliosResponse = $portfoliosInteractor->execute(
+            new GetPortfoliosRequest([
                 'userId' => $request->userId(),
-            ]))
-            ->portfolios;
+                'page' => $request->page(),
+                'perPage' => $request->perPage(),
+                'sort' => $request->sort(),
+                'direction' => $request->direction(),
+            ])
+        );
 
-        return ApiResponse::success(new PortfolioCollectionResource($portfolios));
+        return ApiResponse::success(
+            new PortfolioCollectionResource($portfoliosResponse->portfolios),
+            [
+                'total' => $portfoliosResponse->total,
+                'page' => $portfoliosResponse->page,
+                'per_page' => $portfoliosResponse->perPage,
+                'last_page' => $portfoliosResponse->lastPage,
+            ]
+        );
     }
 }

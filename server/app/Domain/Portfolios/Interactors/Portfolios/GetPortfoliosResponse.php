@@ -10,4 +10,8 @@ use Spatie\DataTransferObject\DataTransferObject;
 final class GetPortfoliosResponse extends DataTransferObject
 {
     public Collection $portfolios;
+    public int $total;
+    public int $page;
+    public int $perPage;
+    public int $lastPage;
 }

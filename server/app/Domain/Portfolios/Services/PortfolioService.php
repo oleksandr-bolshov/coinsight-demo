@@ -7,7 +7,7 @@ namespace App\Domain\Portfolios\Services;
 use App\Domain\Common\Exceptions\ModelNotFound;
 use App\Domain\Portfolios\Exceptions\PortfolioNotFound;
 use App\Domain\Portfolios\Models\Portfolio;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 final class PortfolioService
 {
@@ -22,9 +22,16 @@ final class PortfolioService
         }
     }
 
-    public function getCollectionByUserId(int $id): Collection
-    {
-        return Portfolio::whereUserId($id)->get();
+    public function paginateByUserId(
+        int $userId,
+        int $page,
+        int $perPage,
+        string $sort,
+        string $direction
+    ): LengthAwarePaginator {
+        return Portfolio::orderBy($sort, $direction)
+            ->where('user_id', $userId)
+            ->paginate($perPage, ['*'], null, $page);
     }
 
     public function store(Portfolio $portfolio): Portfolio
