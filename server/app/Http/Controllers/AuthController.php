@@ -11,9 +11,9 @@ use App\Domain\Users\Interactors\Auth\RegisterRequest;
 use App\Domain\Users\Interactors\Users\GetUserByIdInteractor;
 use App\Domain\Users\Interactors\Users\GetUserByIdRequest;
 use App\Http\ApiResponse;
-use App\Http\Requests\Auth\GetCurrentUserApiRequest;
 use App\Http\Requests\Auth\LoginApiRequest;
 use App\Http\Requests\Auth\RegisterApiRequest;
+use App\Http\Requests\DefaultRequest;
 use App\Http\Resources\Auth\LoginResource;
 use App\Http\Resources\Auth\UserResource;
 
@@ -49,7 +49,7 @@ final class AuthController
     }
 
     public function me(
-        GetCurrentUserApiRequest $request,
+        DefaultRequest $request,
         GetUserByIdInteractor $getUserByIdInteractor
     ): ApiResponse {
         $user = $getUserByIdInteractor
