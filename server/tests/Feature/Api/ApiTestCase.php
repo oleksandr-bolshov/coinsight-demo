@@ -14,7 +14,6 @@ abstract class ApiTestCase extends TestCase
 {
     protected User $user;
     protected Session $session;
-    protected string $accessToken;
     protected array $headers = [];
 
     private const API_PREFIX = 'api';
@@ -25,8 +24,8 @@ abstract class ApiTestCase extends TestCase
         $this->user = factory(User::class)->create();
         $this->session = factory(Session::class)->create();
         $tokenService = $this->app->make(TokenService::class);
-        $this->accessToken = $tokenService->generateAccessToken($this->session->id);
-        $this->headers['Authorization'] = 'Bearer ' . $this->accessToken;
+        $accessToken = $tokenService->generateAccessToken($this->session->id);
+        $this->headers['Authorization'] = 'Bearer ' . $accessToken;
     }
 
     public function apiGet(string $endpoint, array $data = []): TestResponse
@@ -41,6 +40,13 @@ abstract class ApiTestCase extends TestCase
         $uri = $this->getEndpointUri($endpoint);
 
         return parent::postJson($uri, $data, $this->headers);
+    }
+
+    public function apiPut(string $endpoint, array $data): TestResponse
+    {
+        $uri = $this->getEndpointUri($endpoint);
+
+        return parent::putJson($uri, $data, $this->headers);
     }
 
     private function getEndpointUri(string $endpoint, array $data = []): string
