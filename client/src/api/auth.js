@@ -13,7 +13,7 @@ const logout = params =>
   });
 
 const refreshAccessToken = () =>
-  httpClient.get('/sessions/access-token', {
+  httpClient.get('/sessions/refresh', {
     requestOptions: {useRefreshToken: true},
   });
 
