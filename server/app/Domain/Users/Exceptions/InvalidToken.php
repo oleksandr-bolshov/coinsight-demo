@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Users\Exceptions;
+namespace App\Domain\Users\Exceptions;
 
 use App\Support\Contracts\Exception as ExceptionContract;
 use App\Support\Traits\ExceptionToArrayTrait;
