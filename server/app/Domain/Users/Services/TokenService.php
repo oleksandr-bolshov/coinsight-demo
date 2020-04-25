@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace App\Domain\Users\Services;
 
-use App\Http\Exceptions\InvalidToken;
+use App\Http\Users\Exceptions\InvalidToken;
 use Carbon\CarbonImmutable;
 use Lcobucci\Clock\FrozenClock;
 use Lcobucci\JWT\Configuration;

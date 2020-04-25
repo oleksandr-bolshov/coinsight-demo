@@ -2,53 +2,61 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group([
-    'prefix' => 'auth'
-], function() {
-    Route::post('/register', 'AuthController@register');
-    Route::post('/login', 'AuthController@login');
-    Route::get('/me', 'AuthController@me')->middleware('token:access');
-});
-
-Route::group([
-    'prefix' => 'sessions'
-], function() {
+Route::namespace('Users\Controllers')->group(function () {
     Route::group([
-        'middleware' => 'token:access'
-    ], function () {
-        Route::get('/', 'SessionController@getSessions');
-        Route::put('/terminate', 'SessionController@terminate');
+        'prefix' => 'auth',
+    ], function() {
+        Route::post('/register', 'AuthController@register');
+        Route::post('/login', 'AuthController@login');
+        Route::middleware('token:access')
+            ->get('/me', 'AuthController@me');
     });
 
-    Route::get('/access-token', 'SessionController@getAccessToken')->middleware('token:refresh');
+    Route::group([
+        'prefix' => 'sessions',
+    ], function() {
+        Route::group([
+            'middleware' => 'token:access'
+        ], function () {
+            Route::get('/', 'SessionController@getSessions');
+            Route::put('/terminate', 'SessionController@terminate');
+        });
+
+        Route::middleware('token:refresh')
+            ->get('/access-token', 'SessionController@getAccessToken');
+    });
 });
 
+Route::namespace('Markets\Controllers')->group(function () {
+    Route::middleware('token:access')
+        ->get('/global', 'GlobalStatsController@getGlobalStats');
 
-Route::middleware('token:access')
-    ->get('/global', 'GlobalStats@getGlobalStats');
-
-Route::group([
-    'prefix' => 'coins',
-    'middleware' => 'token:access'
-], function () {
-    Route::get('/', 'CoinController@getCoins');
-    Route::get('/{id}/profile', 'CoinController@getCoinProfile');
-    Route::get('/{id}/latest', 'CoinController@getCoinMarketData');
-    Route::get('/{id}/historical', 'CoinController@getCoinHistoricalData');
+    Route::group([
+        'prefix' => 'coins',
+        'middleware' => 'token:access'
+    ], function () {
+        Route::get('/', 'CoinController@getCoins');
+        Route::get('/{id}/profile', 'CoinController@getCoinProfile');
+        Route::get('/{id}/latest', 'CoinController@getCoinMarketData');
+        Route::get('/{id}/historical', 'CoinController@getCoinHistoricalData');
+    });
 });
 
-Route::group([
-    'prefix' => 'portfolios',
-    'middleware' => 'token:access',
-], function () {
-    Route::post('/', 'PortfolioController@createPortfolio');
-    Route::get('/', 'PortfolioController@getPortfolios');
+Route::namespace('Portfolios\Controllers')->group(function () {
+    Route::group([
+        'prefix' => 'portfolios',
+        'middleware' => 'token:access',
+    ], function () {
+        Route::post('/', 'PortfolioController@createPortfolio');
+        Route::get('/', 'PortfolioController@getPortfolios');
+    });
+
+    Route::group([
+        'prefix' => 'transactions',
+        'middleware' => 'token:access',
+    ], function () {
+        Route::post('/', 'TransactionController@createTransaction');
+        Route::get('/', 'TransactionController@getTransactions');
+    });
 });
 
-Route::group([
-    'prefix' => 'transactions',
-    'middleware' => 'token:access',
-], function () {
-    Route::post('/', 'TransactionController@createTransaction');
-    Route::get('/', 'TransactionController@getTransactions');
-});
