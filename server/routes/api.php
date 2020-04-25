@@ -23,7 +23,7 @@ Route::namespace('Users\Controllers')->group(function () {
         });
 
         Route::middleware('token:refresh')
-            ->get('/access-token', 'SessionController@getAccessToken');
+            ->get('/refresh', 'SessionController@getAccessToken');
     });
 });
 
