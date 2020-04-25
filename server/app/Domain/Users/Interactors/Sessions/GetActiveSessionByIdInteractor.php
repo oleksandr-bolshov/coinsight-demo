@@ -5,19 +5,20 @@ declare(strict_types=1);
 namespace App\Domain\Users\Interactors\Sessions;
 
 use App\Domain\Users\Entities\Session as SessionEntity;
-use App\Domain\Users\Exceptions\SessionNotFound;
-use App\Domain\Users\Models\Session;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Domain\Users\Services\SessionService;
 
 final class GetActiveSessionByIdInteractor
 {
+    private SessionService $sessionService;
+
+    public function __construct(SessionService $sessionService)
+    {
+        $this->sessionService = $sessionService;
+    }
+
     public function execute(GetActiveSessionByIdRequest $request): GetActiveSessionByIdResponse
     {
-        try {
-            $session = Session::where('id', $request->id)->active()->firstOrFail();
-        } catch (ModelNotFoundException $exception) {
-            throw new SessionNotFound();
-        }
+        $session = $this->sessionService->getActiveById($request->id);
 
         return new GetActiveSessionByIdResponse([
             'session' => SessionEntity::fromModel($session)

@@ -17,10 +17,14 @@ final class VerifyToken
     const REFRESH_TOKEN_TYPE = 'refresh';
 
     private TokenService $tokenService;
+    private GetActiveSessionByIdInteractor $activeSessionByIdInteractor;
 
-    public function __construct(TokenService $tokenService)
-    {
+    public function __construct(
+        TokenService $tokenService,
+        GetActiveSessionByIdInteractor $activeSessionByIdInteractor
+    ) {
         $this->tokenService = $tokenService;
+        $this->activeSessionByIdInteractor = $activeSessionByIdInteractor;
     }
 
     public function handle(Request $request, Closure $next, $tokenType)
@@ -39,11 +43,13 @@ final class VerifyToken
             $sessionId = $this->tokenService->getSessionIdFromRefreshToken($token);
         }
 
-        $session = (new GetActiveSessionByIdInteractor)->execute(
-            new GetActiveSessionByIdRequest([
-                'id' => $sessionId,
-            ])
-        )->session;
+        $session = $this->activeSessionByIdInteractor
+            ->execute(
+                new GetActiveSessionByIdRequest([
+                    'id' => $sessionId,
+                ])
+            )
+            ->session;
 
         $request->merge([
             'session_id' => $session->id,

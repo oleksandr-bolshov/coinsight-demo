@@ -9,16 +9,17 @@ use App\Coinfo\Types\CoinOverview;
 use App\Domain\Markets\Entities\Coin as CoinEntity;
 use App\Domain\Markets\Entities\CoinOverview as CoinOverviewEntity;
 use App\Domain\Markets\Models\Coin as CoinModel;
-use Illuminate\Database\Eloquent\Collection as EloquentCollection;
-use Illuminate\Support\Collection;
+use App\Domain\Markets\Services\CoinService;
 
 final class GetCoinsInteractor
 {
     private Client $client;
+    private CoinService $coinService;
 
-    public function __construct(Client $client)
+    public function __construct(Client $client, CoinService $coinService)
     {
         $this->client = $client;
+        $this->coinService = $coinService;
     }
 
     public function execute(GetCoinsRequest $request): GetCoinsResponse
@@ -27,7 +28,9 @@ final class GetCoinsInteractor
             $this->client->markets($request->page, $request->perPage)
         );
 
-        $coinModelCollection = $this->getCoinWhereNames($coinOverviewCollection->pluck('name'));
+        $coinModelCollection = $this->coinService->getCollectionByNames(
+            $coinOverviewCollection->pluck('name')->toArray()
+        );
 
         $coinOverviewEntityCollection = collect();
         foreach ($coinOverviewCollection as $coinOverview) {
@@ -62,10 +65,5 @@ final class GetCoinsInteractor
             'marketCap' => $coinOverview->marketCap,
             'volume' => $coinOverview->volume,
         ]);
-    }
-
-    private function getCoinWhereNames(Collection $names): EloquentCollection
-    {
-        return CoinModel::whereIn('name', $names)->get();
     }
 }

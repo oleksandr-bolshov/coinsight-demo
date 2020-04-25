@@ -7,26 +7,22 @@ namespace App\Domain\Markets\Interactors\Coins;
 use App\Coinfo\Client;
 use App\Domain\Markets\Entities\CoinHistoricalData;
 use App\Domain\Markets\Enums\ChartDays;
-use App\Domain\Markets\Exceptions\CoinNotFound;
-use App\Domain\Markets\Models\Coin as CoinModel;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Domain\Markets\Services\CoinService;
 
 final class GetHistoricalDataInteractor
 {
     private Client $client;
+    private CoinService $coinService;
 
-    public function __construct(Client $client)
+    public function __construct(Client $client, CoinService $coinService)
     {
         $this->client = $client;
+        $this->coinService = $coinService;
     }
 
     public function execute(GetHistoricalDataRequest $request): GetHistoricalDataResponse
     {
-        try {
-            $coin = CoinModel::findOrFail($request->id);
-        } catch (ModelNotFoundException $exception) {
-            throw new CoinNotFound();
-        }
+        $coin = $this->coinService->getById($request->id);
 
         if ($request->days->is(ChartDays::MAX)) {
             $historicalDataResponse = $this->client->coinHistoricalDataAllTime($coin->name);

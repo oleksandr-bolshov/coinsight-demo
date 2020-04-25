@@ -7,28 +7,24 @@ namespace App\Domain\Markets\Interactors\Coins;
 use App\Coinfo\Client;
 use App\Coinfo\Types\CoinProfile;
 use App\Domain\Markets\Entities\CoinProfile as CoinProfileEntity;
-use App\Domain\Markets\Exceptions\CoinNotFound;
-use App\Domain\Markets\Models\Coin as CoinModel;
 use App\Domain\Markets\Models\CoinProfile as CoinProfileModel;
 use App\Domain\Markets\Models\CoinLink;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
+use App\Domain\Markets\Services\CoinService;
 
 final class GetProfileInteractor
 {
     private Client $client;
+    private CoinService $coinService;
 
-    public function __construct(Client $client)
+    public function __construct(Client $client, CoinService $coinService)
     {
         $this->client = $client;
+        $this->coinService = $coinService;
     }
 
     public function execute(GetProfileRequest $request): GetProfileResponse
     {
-        try {
-            $coin = CoinModel::with(['profile', 'links'])->findOrFail($request->id);
-        } catch (ModelNotFoundException $exception) {
-            throw new CoinNotFound();
-        }
+        $coin = $this->coinService->getById($request->id, ['profile', 'links']);
 
         if ($coin->profile === null) {
             $coinProfile = $this->client->coinProfile($coin->name);

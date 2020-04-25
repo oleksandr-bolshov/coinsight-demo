@@ -4,23 +4,21 @@ declare(strict_types=1);
 
 namespace App\Domain\Users\Interactors\Sessions;
 
-use App\Domain\Users\Exceptions\SessionNotFound;
-use App\Domain\Users\Models\Session;
+use App\Domain\Users\Services\SessionService;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 final class TerminateSessionInteractor
 {
+    private SessionService $sessionService;
+
+    public function __construct(SessionService $sessionService)
+    {
+        $this->sessionService = $sessionService;
+    }
+
     public function execute(TerminateSessionRequest $request): TerminateSessionResponse
     {
-        try {
-            $session = Session::whereId($request->sessionId)
-                ->whereUserId($request->userId)
-                ->active()
-                ->firstOrFail();
-        } catch (ModelNotFoundException $exception) {
-            throw new SessionNotFound();
-        }
+        $session = $this->sessionService->getActiveByIdAndUserId($request->sessionId, $request->userId);
 
         $session->terminated_at = Carbon::now();
         $session->save();
