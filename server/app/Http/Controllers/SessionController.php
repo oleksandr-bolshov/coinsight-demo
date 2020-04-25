@@ -4,8 +4,6 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
-use App\Domain\Users\Interactors\Sessions\GetActiveSessionByIdInteractor;
-use App\Domain\Users\Interactors\Sessions\GetActiveSessionByIdRequest;
 use App\Domain\Users\Interactors\Sessions\GetUserActiveSessionsInteractor;
 use App\Domain\Users\Interactors\Sessions\GetUserActiveSessionsRequest;
 use App\Domain\Users\Interactors\Sessions\TerminateSessionInteractor;
@@ -22,7 +20,6 @@ use App\Http\Resources\Auth\AccessTokenResource;
 use App\Http\Resources\Sessions\SessionCollectionResource;
 use App\Http\Resources\Sessions\TerminateSessionResource;
 use App\Http\Responses\AccessTokenResponse;
-use App\Http\Responses\TerminateSessionResponse;
 
 final class SessionController
 {
@@ -73,29 +70,15 @@ final class SessionController
 
     public function terminate(
         TerminateSessionApiRequest $request,
-        GetActiveSessionByIdInteractor $getActiveSessionByIdInteractor
-    ): ApiResponse
-    {
-        $session = $getActiveSessionByIdInteractor->execute(
-            new GetActiveSessionByIdRequest([
-                'id' => $request->id()
+        TerminateSessionInteractor $terminateSessionInteractor
+    ): ApiResponse {
+        $terminateSessionResponse = $terminateSessionInteractor->execute(
+            new TerminateSessionRequest([
+                'sessionId' => $request->id(),
+                'userId' => $request->userId(),
             ])
-        )->session;
+        );
 
-        if ($session->userId === $request->userId()) {
-            $sessionId = (new TerminateSessionInteractor())->execute(
-                new TerminateSessionRequest([
-                    'id' => $request->id(),
-                ])
-            )->id;
-
-            $terminateSessionResponse = new TerminateSessionResponse([
-                'id' => $sessionId,
-            ]);
-
-            return ApiResponse::success(new TerminateSessionResource($terminateSessionResponse));
-        } else {
-            throw new InvalidSessionId();
-        }
+        return ApiResponse::success(new TerminateSessionResource($terminateSessionResponse));
     }
 }

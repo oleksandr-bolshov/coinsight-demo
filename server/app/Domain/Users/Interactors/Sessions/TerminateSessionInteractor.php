@@ -14,7 +14,10 @@ final class TerminateSessionInteractor
     public function execute(TerminateSessionRequest $request): TerminateSessionResponse
     {
         try {
-            $session = Session::findOrFail($request->id);
+            $session = Session::whereId($request->sessionId)
+                ->whereUserId($request->userId)
+                ->active()
+                ->firstOrFail();
         } catch (ModelNotFoundException $exception) {
             throw new SessionNotFound();
         }
@@ -23,7 +26,7 @@ final class TerminateSessionInteractor
         $session->save();
 
         return new TerminateSessionResponse([
-            'id' => $request->id
+            'id' => $session->id
         ]);
     }
 }

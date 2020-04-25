@@ -8,5 +8,6 @@ use Spatie\DataTransferObject\DataTransferObject;
 
 final class TerminateSessionRequest extends DataTransferObject
 {
-    public int $id;
+    public int $sessionId;
+    public int $userId;
 }
