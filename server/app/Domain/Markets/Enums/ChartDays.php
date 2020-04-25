@@ -13,5 +13,5 @@ final class ChartDays extends Enum
     const ONE_MONTH = 30;
     const SIX_MONTH = 180;
     const ONE_YEAR = 365;
-    const MAX = 'max';
+    const MAX = -1;
 }
