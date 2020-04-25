@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Services;
+namespace App\Domain\Users\Services;
 
 use App\Http\Exceptions\InvalidToken;
 use Carbon\CarbonImmutable;

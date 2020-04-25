@@ -12,6 +12,7 @@ use App\Domain\Users\Interactors\Sessions\TerminateSessionInteractor;
 use App\Domain\Users\Interactors\Sessions\TerminateSessionRequest;
 use App\Domain\Users\Interactors\Sessions\UpdateSessionLastUsedInteractor;
 use App\Domain\Users\Interactors\Sessions\UpdateSessionLastUsedRequest;
+use App\Domain\Users\Services\TokenService;
 use App\Http\ApiResponse;
 use App\Http\Exceptions\InvalidSessionId;
 use App\Http\Requests\Sessions\GetAccessTokenApiRequest;
@@ -22,7 +23,6 @@ use App\Http\Resources\Sessions\SessionCollectionResource;
 use App\Http\Resources\Sessions\TerminateSessionResource;
 use App\Http\Responses\AccessTokenResponse;
 use App\Http\Responses\TerminateSessionResponse;
-use App\Http\Services\TokenService;
 
 final class SessionController
 {

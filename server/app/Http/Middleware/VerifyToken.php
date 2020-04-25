@@ -6,8 +6,8 @@ namespace App\Http\Middleware;
 
 use App\Domain\Users\Interactors\Sessions\GetActiveSessionByIdInteractor;
 use App\Domain\Users\Interactors\Sessions\GetActiveSessionByIdRequest;
+use App\Domain\Users\Services\TokenService;
 use App\Http\Exceptions\TokenRequired;
-use App\Http\Services\TokenService;
 use Closure;
 use Illuminate\Http\Request;
 

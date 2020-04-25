@@ -6,8 +6,7 @@ namespace Tests\Feature\Api;
 
 use App\Domain\Users\Models\Session;
 use App\Domain\Users\Models\User;
-use App\Http\Services\TokenService;
-use Illuminate\Support\Arr;
+use App\Domain\Users\Services\TokenService;
 use Illuminate\Testing\TestResponse;
 use Tests\TestCase;
 
