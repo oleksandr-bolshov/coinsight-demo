@@ -8,18 +8,15 @@ use App\Domain\Users\Interactors\Sessions\GetUserActiveSessionsInteractor;
 use App\Domain\Users\Interactors\Sessions\GetUserActiveSessionsRequest;
 use App\Domain\Users\Interactors\Sessions\TerminateSessionInteractor;
 use App\Domain\Users\Interactors\Sessions\TerminateSessionRequest;
-use App\Domain\Users\Interactors\Sessions\UpdateSessionLastUsedInteractor;
-use App\Domain\Users\Interactors\Sessions\UpdateSessionLastUsedRequest;
-use App\Domain\Users\Services\TokenService;
+use App\Domain\Users\Interactors\Sessions\GetAccessTokenInteractor;
+use App\Domain\Users\Interactors\Sessions\GetAccessTokenRequest;
 use App\Http\ApiResponse;
-use App\Http\Exceptions\InvalidSessionId;
-use App\Http\Requests\Sessions\GetAccessTokenApiRequest;
+use App\Http\Requests\DefaultRequest;
 use App\Http\Requests\Sessions\GetSessionsApiRequest;
 use App\Http\Requests\Sessions\TerminateSessionApiRequest;
 use App\Http\Resources\Auth\AccessTokenResource;
 use App\Http\Resources\Sessions\SessionCollectionResource;
 use App\Http\Resources\Sessions\TerminateSessionResource;
-use App\Http\Responses\AccessTokenResponse;
 
 final class SessionController
 {
@@ -49,21 +46,14 @@ final class SessionController
     }
 
     public function getAccessToken(
-        GetAccessTokenApiRequest $request,
-        UpdateSessionLastUsedInteractor $updateSessionLastUsedInteractor,
-        TokenService $tokenService
+        DefaultRequest $request,
+        GetAccessTokenInteractor $accessTokenInteractor
     ): ApiResponse {
-        $updateSessionLastUsedInteractor->execute(
-            new UpdateSessionLastUsedRequest([
+        $accessTokenResponse = $accessTokenInteractor->execute(
+            new GetAccessTokenRequest([
                 'id' => $request->sessionId(),
             ])
         );
-
-        $accessToken = $tokenService->generateAccessToken($request->sessionId());
-
-        $accessTokenResponse = new AccessTokenResponse([
-            'accessToken' => $accessToken,
-        ]);
 
         return ApiResponse::success(new AccessTokenResource($accessTokenResponse));
     }

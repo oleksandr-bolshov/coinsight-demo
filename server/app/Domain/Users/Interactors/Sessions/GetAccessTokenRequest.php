@@ -6,7 +6,7 @@ namespace App\Domain\Users\Interactors\Sessions;
 
 use Spatie\DataTransferObject\DataTransferObject;
 
-final class UpdateSessionLastUsedRequest extends DataTransferObject
+final class GetAccessTokenRequest extends DataTransferObject
 {
     public int $id;
 }
