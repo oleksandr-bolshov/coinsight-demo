@@ -80,20 +80,11 @@ final class MarketController
         GetCoinHistoricalDataApiRequest $request,
         GetHistoricalDataInteractor $historicalDataInteractor
     ): ApiResponse {
-        $days = [
-            '1d' => ChartDays::ONE_DAY,
-            '1w' => ChartDays::ONE_WEEK,
-            '1m' => ChartDays::ONE_MONTH,
-            '6m' => ChartDays::SIX_MONTH,
-            '1y' => ChartDays::ONE_YEAR,
-            'all' => ChartDays::MAX,
-        ][$request->period()];
-
         $coinHistoricalData = $historicalDataInteractor
             ->execute(
                 new GetHistoricalDataRequest([
                     'id' => $request->id(),
-                    'days' => new ChartDays($days),
+                    'days' => new ChartDays($request->period()),
                 ])
             )
             ->historicalData;

@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Requests\Markets;
 
+use App\Domain\Markets\Enums\ChartDays;
 use App\Http\Requests\ApiRequest;
 
 final class GetCoinHistoricalDataApiRequest extends ApiRequest
@@ -20,8 +21,15 @@ final class GetCoinHistoricalDataApiRequest extends ApiRequest
         return (int) $this->route('id');
     }
 
-    public function period(): string
+    public function period(): int
     {
-        return $this->get('period');
+        return [
+            '1d' => ChartDays::ONE_DAY,
+            '1w' => ChartDays::ONE_WEEK,
+            '1m' => ChartDays::ONE_MONTH,
+            '6m' => ChartDays::SIX_MONTH,
+            '1y' => ChartDays::ONE_YEAR,
+            'all' => ChartDays::MAX,
+        ][$this->get('period')];
     }
 }
