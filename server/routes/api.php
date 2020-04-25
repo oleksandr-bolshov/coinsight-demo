@@ -25,16 +25,16 @@ Route::group([
 
 
 Route::middleware('token:access')
-    ->get('/global', 'MarketController@getGlobalStats');
+    ->get('/global', 'GlobalStats@getGlobalStats');
 
 Route::group([
     'prefix' => 'coins',
     'middleware' => 'token:access'
 ], function () {
-    Route::get('/', 'MarketController@getCoins');
-    Route::get('/{id}/profile', 'MarketController@getCoinProfile');
-    Route::get('/{id}/latest', 'MarketController@getCoinMarketData');
-    Route::get('/{id}/historical', 'MarketController@getCoinHistoricalData');
+    Route::get('/', 'CoinController@getCoins');
+    Route::get('/{id}/profile', 'CoinController@getCoinProfile');
+    Route::get('/{id}/latest', 'CoinController@getCoinMarketData');
+    Route::get('/{id}/historical', 'CoinController@getCoinHistoricalData');
 });
 
 Route::group([

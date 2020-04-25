@@ -13,7 +13,6 @@ use App\Domain\Markets\Interactors\Coins\GetProfileInteractor;
 use App\Domain\Markets\Interactors\Coins\GetProfileRequest;
 use App\Domain\Markets\Interactors\Coins\GetCoinsInteractor;
 use App\Domain\Markets\Interactors\Coins\GetCoinsRequest;
-use App\Domain\Markets\Interactors\GlobalStats\GetGlobalStatsInteractor;
 use App\Http\ApiResponse;
 use App\Http\Requests\Markets\GetCoinHistoricalDataApiRequest;
 use App\Http\Requests\Markets\GetCoinMarketDataApiRequest;
@@ -23,16 +22,9 @@ use App\Http\Resources\Markets\CoinOverviewCollectionResource;
 use App\Http\Resources\Markets\CoinHistoricalDataCollectionResource;
 use App\Http\Resources\Markets\CoinMarketDataResource;
 use App\Http\Resources\Markets\CoinProfileResource;
-use App\Http\Resources\Markets\GlobalStatsResource;
 
-final class MarketController
+final class CoinController
 {
-    public function getGlobalStats(GetGlobalStatsInteractor $globalStatsInteractor): ApiResponse
-    {
-        $globalStats = $globalStatsInteractor->execute()->globalStats;
-        return ApiResponse::success(new GlobalStatsResource($globalStats));
-    }
-
     public function getCoins(
         GetCoinsApiRequest $request,
         GetCoinsInteractor $getCoinsInteractor
