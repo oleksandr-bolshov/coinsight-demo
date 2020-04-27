@@ -53,7 +53,7 @@ final class Client
             fn(string $currencyName) => Str::slug($currencyName),
             $currenciesNames
         );
-        return $this->coinGecko->coinMarketsForCoins($slugged);
+        return $this->coinGecko->coinsMarkets(0, 0, $slugged);
     }
 
     public function coinProfile(string $currencyName): CoinProfile

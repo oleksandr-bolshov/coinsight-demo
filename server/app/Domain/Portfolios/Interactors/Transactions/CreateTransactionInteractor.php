@@ -9,26 +9,26 @@ use App\Domain\Markets\Services\CoinService;
 use App\Domain\Portfolios\Entities\Transaction as TransactionEntity;
 use App\Domain\Portfolios\Models\Transaction;
 use App\Domain\Portfolios\Services\PortfolioService;
-use App\Domain\Portfolios\Services\TransactionCalculator;
+use App\Domain\Portfolios\Services\FinanceCalculator;
 use App\Domain\Portfolios\Services\TransactionService;
 
 final class CreateTransactionInteractor
 {
     private Client $client;
-    private TransactionCalculator $transactionCalculator;
+    private FinanceCalculator $calculator;
     private PortfolioService $portfolioService;
     private CoinService $coinService;
     private TransactionService $transactionService;
 
     public function __construct(
         Client $client,
-        TransactionCalculator $transactionCalculator,
+        FinanceCalculator $financeCalculator,
         PortfolioService $portfolioService,
         CoinService $coinService,
         TransactionService $transactionService
     ) {
         $this->client = $client;
-        $this->transactionCalculator = $transactionCalculator;
+        $this->calculator = $financeCalculator;
         $this->portfolioService = $portfolioService;
         $this->coinService = $coinService;
         $this->transactionService = $transactionService;
@@ -53,9 +53,9 @@ final class CreateTransactionInteractor
 
         $coinMarketData = $this->client->coinMarketData($coin->name, $coin->symbol);
 
-        $cost = $this->transactionCalculator->cost($request->quantity, $request->pricePerCoin, $request->fee);
-        $currentValue = $this->transactionCalculator->value($request->quantity, $coinMarketData->price);
-        $valueChange = $this->transactionCalculator->valueChange($currentValue, $cost);
+        $cost = $this->calculator->cost($request->quantity, $request->pricePerCoin, $request->fee);
+        $currentValue = $this->calculator->value($request->quantity, $coinMarketData->price);
+        $valueChange = $this->calculator->valueChange($currentValue, $cost);
 
         $transactionEntity = TransactionEntity::create($transaction, $cost, $currentValue, $valueChange);
 

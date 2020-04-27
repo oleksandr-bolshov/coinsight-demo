@@ -49,6 +49,7 @@ Route::namespace('Portfolios\Controllers')->group(function () {
     ], function () {
         Route::post('/', 'PortfolioController@createPortfolio');
         Route::get('/', 'PortfolioController@getPortfolios');
+        Route::get('/{id}', 'PortfolioController@getPortfolioReportById');
     });
 
     Route::group([

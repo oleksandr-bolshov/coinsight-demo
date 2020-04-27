@@ -16,24 +16,13 @@ final class CoinGecko extends Aggregator
     public function coinsMarkets(
         int $page = 1,
         int $perPage = 100,
+        array $ids = [],
         bool $sparkline = false
     ): CoinOverviewCollection {
         $data = $this->request('coins/markets', [
             'vs_currency' => 'usd',
             'page' => $page,
             'per_page' => $perPage,
-            'sparkline' => $sparkline,
-        ]);
-
-        return CoinOverviewCollectionFactory::create($data);
-    }
-
-    public function coinMarketsForCoins(
-        array $ids,
-        bool $sparkline = false
-    ): CoinOverviewCollection {
-        $data = $this->request('coins/markets', [
-            'vs_currency' => 'usd',
             'ids' => implode(",", $ids),
             'sparkline' => $sparkline,
         ]);

@@ -6,14 +6,17 @@ namespace App\Http\Portfolios\Controllers;
 
 use App\Domain\Portfolios\Interactors\Portfolios\CreatePortfolioInteractor;
 use App\Domain\Portfolios\Interactors\Portfolios\CreatePortfolioRequest;
+use App\Domain\Portfolios\Interactors\Portfolios\GetPortfolioReportByIdInteractor;
+use App\Domain\Portfolios\Interactors\Portfolios\GetPortfolioReportByIdRequest;
 use App\Domain\Portfolios\Interactors\Portfolios\GetPortfoliosInteractor;
 use App\Domain\Portfolios\Interactors\Portfolios\GetPortfoliosRequest;
 use App\Http\Portfolios\Requests\CreatePortfolioApiRequest;
+use App\Http\Portfolios\Requests\GetPortfolioReportByIdApiRequest;
 use App\Http\Portfolios\Requests\GetPortfoliosApiRequest;
 use App\Http\Portfolios\Resources\PortfolioCollectionResource;
+use App\Http\Portfolios\Resources\PortfolioReportResource;
 use App\Http\Portfolios\Resources\PortfolioResource;
 use App\Http\Common\ApiResponse;
-use App\Http\Common\Requests\DefaultRequest;
 
 final class PortfolioController
 {
@@ -54,5 +57,19 @@ final class PortfolioController
                 'last_page' => $portfoliosResponse->lastPage,
             ]
         );
+    }
+
+    public function getPortfolioReportById(
+        GetPortfolioReportByIdApiRequest $request,
+        GetPortfolioReportByIdInteractor $portfolioReportByIdInteractor
+    ): ApiResponse {
+        $report = $portfolioReportByIdInteractor
+            ->execute(new GetPortfolioReportByIdRequest([
+                'userId' => $request->userId(),
+                'portfolioId' => $request->id(),
+            ]))
+            ->report;
+
+        return ApiResponse::success(new PortfolioReportResource($report));
     }
 }

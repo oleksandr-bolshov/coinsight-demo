@@ -11,10 +11,11 @@ use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 final class PortfolioService
 {
-    public function getByIdAndUserId(int $portfolioId, int $userId): Portfolio
+    public function getByIdAndUserId(int $portfolioId, int $userId, array $withRelations = []): Portfolio
     {
         try {
-            return Portfolio::whereId($portfolioId)
+            return Portfolio::with($withRelations)
+                ->whereId($portfolioId)
                 ->whereUserId($userId)
                 ->firstOrFail();
         } catch (ModelNotFound $exception) {
