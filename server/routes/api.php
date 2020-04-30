@@ -50,6 +50,8 @@ Route::namespace('Portfolios\Controllers')->group(function () {
         Route::post('/', 'PortfolioController@createPortfolio');
         Route::get('/', 'PortfolioController@getPortfolios');
         Route::get('/{id}', 'PortfolioController@getPortfolioReportById');
+        Route::put('/{id}', 'PortfolioController@updatePortfolioById');
+        Route::delete('/{id}', 'PortfolioController@deletePortfolioById');
     });
 
     Route::group([
@@ -58,6 +60,8 @@ Route::namespace('Portfolios\Controllers')->group(function () {
     ], function () {
         Route::post('/', 'TransactionController@createTransaction');
         Route::get('/', 'TransactionController@getTransactions');
+        Route::put('/{id}', 'TransactionController@updateTransactionById');
+        Route::delete('/{id}', 'TransactionController@deleteTransactionById');
     });
 });
 

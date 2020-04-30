@@ -39,9 +39,9 @@ final class ExceptionHandler extends Handler
             return ApiResponse::error($exception);
         }
 
-        if ($exception instanceof Exception) {
+        /*if ($exception instanceof Exception) {
             return ApiResponse::error(new UnknownException($exception->getMessage()));
-        }
+        }*/
 
         return parent::render($request, $exception);
     }

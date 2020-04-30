@@ -2,12 +2,12 @@
 
 declare(strict_types=1);
 
-namespace App\Http\Users\Resources;
+namespace App\Http\Common\Resources;
 
 use App\Support\Contracts\Response;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-final class TerminateSessionResource extends JsonResource implements Response
+final class MutationResource extends JsonResource implements Response
 {
     public function toArray($request): array
     {

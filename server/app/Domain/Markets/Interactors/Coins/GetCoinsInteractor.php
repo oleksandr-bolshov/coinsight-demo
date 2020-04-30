@@ -24,7 +24,7 @@ final class GetCoinsInteractor
 
     public function execute(GetCoinsRequest $request): GetCoinsResponse
     {
-        $coinOverviewCollection = collect(
+        /*$coinOverviewCollection = collect(
             $this->client->markets($request->page, $request->perPage)
         );
 
@@ -50,6 +50,27 @@ final class GetCoinsInteractor
         return new GetCoinsResponse([
             'coins' => $coinOverviewEntityCollection,
             'total' => $total,
+            'page' => $request->page,
+            'perPage' => $request->perPage,
+        ]);*/
+
+        $coinsPaginator = CoinModel::paginate($request->perPage, ['*'], null, $request->page);
+
+        $coins = $coinsPaginator->map(fn ($coin, $key) => new CoinEntity([
+            'id' => $coin->id,
+            'name' => $coin->name,
+            'symbol' => $coin->symbol,
+            'icon' => $coin->icon,
+            'rank' => $key + 1 + ($request->page - 1) * $request->perPage,
+            'price' => random_int(1, 10_000),
+            'priceChange24h' => random_int(-10000, 10000) / 100,
+            'marketCap' => random_int(100_000_000, 1_000_000_000),
+            'volume' => random_int(100_000_000, 1_000_000_000),
+        ]));
+
+        return new GetCoinsResponse([
+            'coins' => $coins,
+            'total' => $coinsPaginator->total(),
             'page' => $request->page,
             'perPage' => $request->perPage,
         ]);

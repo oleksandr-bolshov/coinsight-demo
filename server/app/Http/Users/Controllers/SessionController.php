@@ -12,6 +12,7 @@ use App\Domain\Users\Interactors\Sessions\TerminateSessionInteractor;
 use App\Domain\Users\Interactors\Sessions\TerminateSessionRequest;
 use App\Http\Common\ApiResponse;
 use App\Http\Common\Requests\DefaultRequest;
+use App\Http\Common\Resources\MutationResource;
 use App\Http\Users\Requests\GetSessionsApiRequest;
 use App\Http\Users\Requests\TerminateSessionApiRequest;
 use App\Http\Users\Resources\AccessTokenResource;
@@ -69,6 +70,6 @@ final class SessionController
             ])
         );
 
-        return ApiResponse::success(new TerminateSessionResource($terminateSessionResponse));
+        return ApiResponse::success(new MutationResource($terminateSessionResponse));
     }
 }

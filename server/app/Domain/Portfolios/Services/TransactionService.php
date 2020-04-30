@@ -14,6 +14,11 @@ final class TransactionService
         return Transaction::with($withRelations)->wherePortfolioId($portfolioId)->get();
     }
 
+    public function getById(int $id): Transaction
+    {
+        return Transaction::findOrFail($id);
+    }
+
     public function store(Transaction $transaction): Transaction
     {
         $transaction->save();
